@@ -254,9 +254,10 @@
             font-size: 8px;
             opacity: 0.5;
             margin-top: 60px;
+            letter-spacing: normal;
         }
 
-        /* Easter egg: partikel jatuh */
+        /* Easter egg: partikel jatuh dari atas */
         .falling-emoji {
             position: fixed;
             pointer-events: none;
@@ -264,11 +265,12 @@
             font-size: 28px;
             user-select: none;
             animation: fall linear forwards;
+            top: -20px;
         }
 
         @keyframes fall {
             0% {
-                transform: translateY(-10px) rotate(0deg);
+                transform: translateY(0) rotate(0deg);
                 opacity: 1;
             }
             100% {
@@ -375,46 +377,36 @@
     </div>
 
     <script>
-        // Easter egg: klik pada tulisan IEPEAS muncul pesawat dan bintang jatuh
+        // Easter egg: klik tulisan IEPEAS -> emoji jatuh dari atas layar
         const title = document.getElementById('iepeasTitle');
         
-        function createFallingEmoji(emoji, x, y) {
+        function createFallingEmoji(emoji, xPos) {
             const el = document.createElement('div');
             el.className = 'falling-emoji';
             el.textContent = emoji;
-            // Posisi acak di sekitar klik (horizontal ± 30px, vertikal di titik klik)
-            const offsetX = (Math.random() - 0.5) * 60;
-            el.style.left = (x + offsetX) + 'px';
-            el.style.top = y + 'px';
-            // Durasi jatuh acak antara 1.5s - 3s
-            const duration = 1.5 + Math.random() * 1.5;
+            const randomX = xPos !== undefined ? xPos : Math.random() * window.innerWidth;
+            el.style.left = randomX + 'px';
+            const duration = 1.5 + Math.random() * 2;
             el.style.animationDuration = duration + 's';
             document.body.appendChild(el);
-            // Hapus setelah animasi selesai
             setTimeout(() => {
                 el.remove();
             }, duration * 1000);
         }
 
         title.addEventListener('click', (e) => {
-            const rect = title.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            // Jumlah partikel (10-15)
-            const count = 12 + Math.floor(Math.random() * 8);
-            const emojis = ['✈️', '🌟', '⭐', '🚀', '🛸', '💫'];
+            const count = 18 + Math.floor(Math.random() * 12);
+            const emojis = ['✈️', '🌟', '⭐', '🚀', '🛸', '💫', '🌠'];
             
             for (let i = 0; i < count; i++) {
                 const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-                // Spread horizontal lebih luas
-                const xOffset = (Math.random() - 0.5) * 120;
-                const yOffset = (Math.random() - 0.5) * 30;
-                createFallingEmoji(randomEmoji, centerX + xOffset, centerY + yOffset);
+                const randomX = Math.random() * window.innerWidth;
+                setTimeout(() => {
+                    createFallingEmoji(randomEmoji, randomX);
+                }, Math.random() * 400);
             }
         });
 
-        // Menu dropdown toggle (sama seperti sebelumnya)
         const menuToggle = document.getElementById('menuToggle');
         const menuDropdown = document.getElementById('menuDropdown');
         menuToggle.addEventListener('click', (e) => {
