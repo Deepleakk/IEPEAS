@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Marga IEP EAS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 1px, transparent 1px),
+                        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.2) 1px, transparent 1px),
+                        radial-gradient(circle at 40% 90%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                        linear-gradient(135deg, #0a0f2a, #1a1f3a, #2a2f4a);
+            background-size: 60px 60px, 80px 80px, 100px 100px, cover;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .singkatan {
+            background: rgba(0,0,0,0.3);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .keunggulan {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .keunggulan h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            border-bottom: 2px solid #ffb347;
+            padding-bottom: 8px;
+        }
+
+        .feature-list {
+            list-style: none;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 25px 35px;
+        }
+
+        .feature-list li {
+            margin-bottom: 14px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-list li::before {
+            content: "✨";
+            font-size: 1.2rem;
+        }
+
+        .daftar-btn {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-daftar {
+            background: #d45a2b;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .btn-daftar:hover {
+            background: #b23c1a;
+            transform: scale(1.02);
+        }
+
+        .tentang-card {
+            background: rgba(80, 80, 80, 0.35);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            border: 1px solid rgba(128, 128, 128, 0.6);
+            margin-top: 40px;
+            overflow: hidden;
+        }
+
+        .tentang-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 22px 30px;
+        }
+
+        .tentang-header h2 {
+            font-size: 1.8rem;
+            color: #ffecb3;
+        }
+
+        .tentang-header .arrow {
+            font-size: 28px;
+            transition: transform 0.3s;
+        }
+
+        .tentang-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 30px;
+            margin: 0 20px 20px 20px;
+        }
+
+        .tentang-content.show {
+            max-height: 600px;
+            padding: 20px;
+        }
+
+        .tentang-content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .credit {
+            text-align: center;
+            font-size: 8px;
+            opacity: 0.5;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 650px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .keunggulan h2, .tentang-header h2 {
+                font-size: 1.5rem;
+            }
+            .feature-list {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🌸 IEP EAS 🌸</h1>
+        <p>Marga Komunitas Solid & Positif</p>
+        <div class="singkatan">
+            📖 IEP = International Education Plane &nbsp;|&nbsp; EAS = Education Astronomi and Ship
+        </div>
+    </div>
+
+    <div class="keunggulan">
+        <h2>✨ Keunggulan Marga</h2>
+        <ul class="feature-list">
+            <li>✈️ Pengetahuan pesawat terbang modern & klasik</li>
+            <li>🪐 Eksplorasi planet dan ilmu antariksa</li>
+            <li>🤝 Saling membantu dalam masalah sesama anggota</li>
+            <li>🌟 Komunitas tanpa kerusuhan, penuh positif</li>
+            <li>📚 Diskusi rutin dan sharing ilmu</li>
+        </ul>
+    </div>
+
+    <div class="daftar-btn">
+        <a href="web.html" class="btn-daftar">📝 Daftar Sekarang</a>
+    </div>
+
+    <div class="tentang-card">
+        <div class="tentang-header" id="tentangHeader">
+            <h2>📖 Tentang Kami</h2>
+            <span class="arrow" id="arrow">▼</span>
+        </div>
+        <div class="tentang-content" id="tentangContent">
+            <p><strong>Marga IEP EAS</strong> lahir dari kecintaan terhadap dunia penerbangan (International Education Plane) dan eksplorasi antariksa & perkapalan (Education Astronomi and Ship). Kami percaya bahwa pengetahuan dan solidaritas adalah kunci untuk berkembang bersama.</p>
+            <p>Visi kami: menjadi komunitas yang menginspirasi, saling mendukung, dan berkontribusi positif bagi masyarakat luas.</p>
+            <p>Misi kami: menyediakan wadah diskusi yang sehat, membantu anggota yang mengalami kesulitan, serta menjaga nama baik marga dengan integritas.</p>
+            <p>📌 <strong>Motto:</strong> "Bersama kita terbang tinggi, bersama kita jelajah alam semesta."</p>
+            <p>🤝 Bergabunglah dan rasakan kekeluargaan yang hangat!</p>
+        </div>
+    </div>
+
+    <div class="credit">© made with deepseek</div>
+</div>
+
+<script>
+    const header = document.getElementById('tentangHeader');
+    const content = document.getElementById('tentangContent');
+    const arrow = document.getElementById('arrow');
+
+    header.addEventListener('click', () => {
+        content.classList.toggle('show');
+        arrow.style.transform = content.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+</script>
+</body>
+</html>
