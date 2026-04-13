@@ -13,16 +13,42 @@
 
         body {
             min-height: 100vh;
-            /* Background menggunakan BG-Home.jpg */
-            background: url('BG-Home.jpg') no-repeat center center/cover;
+            position: relative;
             font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             color: #f0f0f0;
+        }
+
+        /* Background blur 40px */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('BG-Home.jpg') no-repeat center center/cover;
+            filter: blur(40px);
+            z-index: -2;
+        }
+
+        /* Optional: overlay gelap tipis agar teks lebih terbaca */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 60px 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .hero {
