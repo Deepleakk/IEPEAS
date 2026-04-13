@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linktree - Marga IEPEAS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 40%, #1e293b 100%);
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            color: #e2e8f0;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        .menu-toggle {
+            font-size: 32px;
+            cursor: pointer;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(4px);
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.2s;
+            border: 1px solid rgba(59,130,246,0.4);
+        }
+        .menu-toggle:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        .menu-dropdown {
+            position: absolute;
+            top: 55px;
+            left: 0;
+            background: rgba(15, 25, 45, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 10px 0;
+            min-width: 150px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            border: 1px solid rgba(59,130,246,0.4);
+        }
+        .menu-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .menu-dropdown a {
+            display: block;
+            padding: 10px 20px;
+            color: #cbd5e6;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .menu-dropdown a:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .profile {
+            margin-bottom: 40px;
+        }
+        .profile h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .profile p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .link-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 16px 24px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(59,130,246,0.3);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+        .link-card:hover {
+            background: #3b82f6;
+            transform: scale(1.02);
+            border-color: transparent;
+        }
+
+        .credit {
+            text-align: center;
+            font-size: 8px;
+            opacity: 0.5;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 600px) {
+            .profile h1 {
+                font-size: 36px;
+            }
+            .link-card {
+                padding: 14px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <div class="menu-dropdown" id="menuDropdown">
+            <a href="home.html">🏠 Home</a>
+            <a href="web.html">📝 Daftar</a>
+            <a href="linktree.html">🔗 Linktree</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile">
+            <h1>🌸 IEPEAS 🌸</h1>
+            <p>Marga Komunitas Edukasi & Solidaritas</p>
+        </div>
+
+        <a href="https://www.tiktok.com/@marga.iepeas.ofc?_r=1&_t=ZS-95VbnRi6CnN" class="link-card" target="_blank">🎵 TikTok Marga</a>
+        <a href="https://www.tiktok.com/@storyy_rama02?_r=1&_t=ZS-95VbljsXv9B" class="link-card" target="_blank">👤 TikTok Owner</a>
+        <a href="https://chat.whatsapp.com/GMp0cUpgDjp3xJXsl7CojT?mode=gi_t" class="link-card" target="_blank">💬 Grup WhatsApp</a>
+        <a href="https://github.com/Deepleakk" class="link-card" target="_blank">🐙 GitHub</a>
+        <a href="web.html" class="link-card">📝 Form Pendaftaran</a>
+
+        <div class="credit">©IEPEAS</div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const menuDropdown = document.getElementById('menuDropdown');
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuDropdown.classList.toggle('show');
+        });
+        document.addEventListener('click', function(event) {
+            if (!menuToggle.contains(event.target) && !menuDropdown.contains(event.target)) {
+                menuDropdown.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
