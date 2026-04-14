@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pendaftaran - IEPEAS</title>
+    <title>Home - Marga IEPEAS</title>
     <style>
         * {
             margin: 0;
@@ -15,10 +15,7 @@
             background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 40%, #1e293b 100%);
             font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
+            overflow-x: hidden;
         }
         /* Tombol titik tiga (kecil) */
         .menu-container {
@@ -100,38 +97,180 @@
             transform: rotate(90deg);
             color: #ffb347;
         }
-        /* Card form ukuran normal */
-        .glass-card {
-            max-width: 950px;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 40px 45px;
+        /* Konten utama */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
         }
-        /* Form styles */
-        .form-group { margin-bottom: 24px; width: 100%; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #f0f4fa; }
-        .form-group input, .form-group textarea { width: 100%; background: rgba(255,255,255,0.95); border: none; border-radius: 30px; padding: 14px 20px; font-size: 16px; color: #1e2f2f; }
-        .form-group textarea { min-height: 100px; resize: vertical; }
-        .vertical-option { margin-bottom: 24px; }
-        .option-label { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; color: #f0f4fa; }
-        .option-label input { width: auto; transform: scale(1.1); accent-color: #ffb347; }
-        .sub-input { margin-left: 28px; }
-        .sub-input input { width: calc(100% - 30px); padding: 10px 16px; border-radius: 28px; border: none; background: rgba(255,255,255,0.9); }
-        .radio-group-horizontal { display: flex; align-items: center; gap: 25px; margin-left: 20px; margin-top: 8px; }
-        .radio-group-horizontal span { display: flex; align-items: center; gap: 6px; }
-        h1 { font-size: 36px; text-align: center; color: #ffffff; margin-bottom: 8px; }
-        .sub { text-align: center; color: #cbd5e6; font-size: 0.95rem; margin-bottom: 32px; border-bottom: 1px solid rgba(255,255,240,0.2); padding-bottom: 14px; }
-        h2 { font-size: 1.7rem; margin: 28px 0 18px 0; border-left: 7px solid #ffb347; padding-left: 18px; color: #f0f4fa; }
-        button[type="submit"] { background: #d45a2b; border: none; padding: 16px; width: 100%; font-size: 18px; font-weight: bold; color: white; border-radius: 50px; cursor: pointer; margin-top: 20px; transition: 0.2s; }
-        button[type="submit"]:hover { background: #b23c1a; }
-        .follow-info { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); border-left: 5px solid #ffb347; padding: 14px 20px; border-radius: 30px; margin: 30px 0 10px; text-align: center; color: #f0f4fa; }
-        hr { margin: 28px 0 20px; border-color: rgba(255,255,255,0.15); }
-        .footer-text { text-align: center; font-size: 13px; color: #cbd5e6; }
-        .credit { text-align: center; font-size: 8px; opacity: 0.6; margin-top: 20px; color: #cbd5e6; }
-        @media (max-width: 650px) { .glass-card { padding: 25px 20px; } h1 { font-size: 28px; } h2 { font-size: 1.4rem; } .menu-dropdown a { font-size: 22px; } .menu-dropdown { padding-top: 100px; } }
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .hero h1 {
+            font-size: 56px;
+            color: white;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
+            margin-bottom: 16px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            margin-bottom: 15px;
+        }
+        .singkatan {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(4px);
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+        .keunggulan {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .keunggulan h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            border-bottom: 3px solid #60a5fa;
+            padding-bottom: 8px;
+        }
+        .feature-list {
+            list-style: none;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 25px 35px;
+            border: 1px solid rgba(59,130,246,0.2);
+        }
+        .feature-list li {
+            margin-bottom: 14px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feature-list li::before {
+            content: "✨";
+        }
+        .daftar-btn {
+            text-align: center;
+            margin: 40px 0 20px;
+        }
+        .btn-daftar {
+            background: #3b82f6;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .btn-daftar:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+        .peraturan-kecil {
+            text-align: center;
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+        }
+        .peraturan-container {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+        .peraturan-container h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #a78bfa;
+        }
+        .peraturan-list {
+            list-style: none;
+            padding-left: 10px;
+        }
+        .peraturan-list li {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 24px;
+        }
+        .peraturan-list li::before {
+            content: "•";
+            position: absolute;
+            left: 6px;
+            color: #60a5fa;
+        }
+        .peraturan-list li strong {
+            color: #facc15;
+        }
+        .tentang-section {
+            text-align: center;
+            margin: 30px 0 20px;
+        }
+        .tentang-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #a78bfa;
+        }
+        .tentang-content {
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: left;
+            line-height: 1.7;
+            font-size: 1rem;
+            background: rgba(0,0,0,0.2);
+            padding: 25px 30px;
+            border-radius: 28px;
+            border: 1px solid rgba(59,130,246,0.2);
+        }
+        .credit {
+            text-align: center;
+            font-size: 8px;
+            opacity: 0.5;
+            margin-top: 60px;
+        }
+        /* Easter egg */
+        .falling-emoji {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 28px;
+            animation: fall linear forwards;
+            top: -20px;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        @media (max-width: 650px) {
+            .hero h1 { font-size: 36px; }
+            .keunggulan h2, .tentang-section h2, .peraturan-container h3 { font-size: 1.5rem; }
+            .feature-list { padding: 20px; }
+            .menu-dropdown a { font-size: 22px; }
+            .menu-dropdown { padding-top: 100px; }
+        }
     </style>
 </head>
 <body>
@@ -143,6 +282,98 @@
             <a href="web.html">📝 Daftar</a>
             <a href="linktree.html">🔗 Linktree</a>
         </div>
+    </div>
+    <div class="container">
+        <div class="hero">
+            <h1 id="iepeasTitle">🌸 IEPEAS 🌸</h1>
+            <p>Marga Komunitas Solid & Positif</p>
+            <div class="singkatan">
+                <span>✈️ IEP : International Education Plane</span>
+                <span>🌌 EAS : Education Astronomi and Ship</span>
+            </div>
+        </div>
+        <div class="keunggulan">
+            <h2>✨ Keunggulan Marga</h2>
+            <ul class="feature-list">
+                <li>✈️ Pengetahuan pesawat terbang modern & klasik</li>
+                <li>🪐 Eksplorasi planet dan ilmu antariksa</li>
+                <li>🤝 Saling membantu dalam masalah sesama anggota</li>
+                <li>🌟 Komunitas tanpa kerusuhan, penuh positif</li>
+                <li>📚 Diskusi rutin dan sharing ilmu</li>
+            </ul>
+        </div>
+        <div class="daftar-btn">
+            <a href="web.html" class="btn-daftar">📝 Daftar Sekarang</a>
+        </div>
+        <div class="peraturan-kecil">
+            "Kami menjunjung nilai kesopanan, etika, dan adab, untuk kamu yang mau join diharapkan untuk mematuhi peraturan yang ada"
+        </div>
+        <div class="peraturan-container">
+            <h3>📜 Peraturan Wajib Marga</h3>
+            <ul class="peraturan-list">
+                <li>no pedofil, mau hal apapun bercanda dll, dilarang keras</li>
+                <li>No Toxic</li>
+                <li>Kirim Foto minimal sekali lihat kecuali PENTING!!</li>
+                <li>Harus Toleransi</li>
+                <li>Ga boleh ada yang merendahkan</li>
+                <li>Ga boleh membeda-bedakan Agama dan Suku</li>
+                <li>Ga boleh kirim stiker Jomok/18+</li>
+                <li>Usia 13 tahun+</li>
+                <li>No buat ricuh sama marga lain!!!</li>
+                <li>Nomor admin dan member lainnya dilarang disebar ya!!!</li>
+                <li>Wajib pakai nama tiktok IEPEAS</li>
+                <li>Dilarang Spam/Kirim *LINK GA JELAS*</li>
+                <li>Setiap mau upload video gunakan #margaiepeas</li>
+                <li>Dilarang buat konten berkesan menjatuhkan guru</li>
+                <li>Gak intro kick</li>
+                <li><strong>*WAJIB BUAT KONTEN EDUKASI*</strong></li>
+                <li><strong>*WAJIB BUAT KONTEN PESAWAT, KAPAL, DAN ASTRONOMI*</strong></li>
+                <li><strong>*ingat perintah owner itu mutlak*</strong></li>
+            </ul>
+        </div>
+        <div class="tentang-section">
+            <h2>📖 Tentang Kami</h2>
+            <div class="tentang-content">
+                <p><strong>Marga IEPEAS</strong> lahir dari kecintaan terhadap dunia penerbangan (International Education Plane) dan eksplorasi antariksa & perkapalan (Education Astronomi and Ship). Kami percaya bahwa pengetahuan dan solidaritas adalah kunci untuk berkembang bersama.</p>
+                <p>Visi kami: menjadi komunitas yang menginspirasi, saling mendukung, dan berkontribusi positif bagi masyarakat luas. Misi kami: menyediakan wadah diskusi yang sehat, membantu anggota yang mengalami kesulitan, serta menjaga nama baik marga dengan integritas.</p>
+                <p>📌 <strong>Motto:</strong> "Bersama kita terbang tinggi, bersama kita jelajah alam semesta."</p>
+                <p>🤝 Bergabunglah dan rasakan kekeluargaan yang hangat!</p>
+            </div>
+        </div>
+        <div class="credit">©IEPEAS</div>
+    </div>
+    <script>
+        // Easter egg
+        const title = document.getElementById('iepeasTitle');
+        function createFallingEmoji(emoji, xPos) {
+            const el = document.createElement('div');
+            el.className = 'falling-emoji';
+            el.textContent = emoji;
+            el.style.left = (xPos !== undefined ? xPos : Math.random() * window.innerWidth) + 'px';
+            const duration = 1.5 + Math.random() * 2;
+            el.style.animationDuration = duration + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), duration * 1000);
+        }
+        title.addEventListener('click', () => {
+            const count = 18 + Math.floor(Math.random() * 12);
+            const emojis = ['✈️', '🌟', '⭐', '🚀', '🛸', '💫', '🌠'];
+            for (let i = 0; i < count; i++) {
+                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                const randomX = Math.random() * window.innerWidth;
+                setTimeout(() => createFallingEmoji(randomEmoji, randomX), Math.random() * 400);
+            }
+        });
+        // Dropdown menu
+        const menuToggle = document.getElementById('menuToggle');
+        const menuDropdown = document.getElementById('menuDropdown');
+        const menuClose = document.getElementById('menuClose');
+        menuToggle.addEventListener('click', () => menuDropdown.classList.add('show'));
+        menuClose.addEventListener('click', () => menuDropdown.classList.remove('show'));
+        menuDropdown.addEventListener('click', (e) => { if (e.target === menuDropdown) menuDropdown.classList.remove('show'); });
+    </script>
+</body>
+</html>        </div>
     </div>
     <div class="glass-card">
         <h1>🌸 FORM SELEKSI MEMBER 🌸</h1>
