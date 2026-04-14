@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Seleksi Member - IEP EAS</title>
+    <title>Form Pendaftaran - IEPEAS</title>
     <style>
         * {
             margin: 0;
@@ -13,27 +13,88 @@
 
         body {
             min-height: 100vh;
-            background: url('BG-Daftar.jpg') no-repeat center center/cover;
+            background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 40%, #1e293b 100%);
             font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            color: #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
         }
 
-        /* Card form: blur 20px + transparan 20% */
+        /* Menu titik tiga - ukuran kotak 80px, font 35px */
+        .menu-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        .menu-toggle {
+            font-size: 35px;
+            cursor: pointer;
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(6px);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.2s;
+            border: 1px solid rgba(59,130,246,0.6);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .menu-toggle:hover {
+            background: #3b82f6;
+            color: white;
+            transform: scale(1.05);
+        }
+        .menu-dropdown {
+            position: absolute;
+            top: 90px;
+            left: 0;
+            background: rgba(15,25,45,0.96);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 12px 0;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            border: 1px solid rgba(59,130,246,0.4);
+        }
+        .menu-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .menu-dropdown a {
+            display: block;
+            padding: 12px 24px;
+            color: #cbd5e6;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+        .menu-dropdown a:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* CARD GELAP (tidak putih, tidak hitam) */
         .glass-card {
             max-width: 950px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.85);  /* gelap kebiruan */
+            backdrop-filter: blur(12px);
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             padding: 40px 45px;
         }
 
-        /* FORM STYLES */
+        /* Form styles */
         .form-group {
             margin-bottom: 24px;
             width: 100%;
@@ -43,8 +104,8 @@
             font-weight: 600;
             font-size: 1rem;
             margin-bottom: 8px;
-            color: #fff5ea;
-            text-shadow: 0 2px 3px rgba(0,0,0,0.4);
+            color: #f0f4fa;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         .form-group input, .form-group textarea {
             width: 100%;
@@ -61,7 +122,7 @@
             resize: vertical;
         }
 
-        /* VERTICAL OPTIONS */
+        /* Vertical options */
         .vertical-option {
             margin-bottom: 24px;
         }
@@ -70,7 +131,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 8px;
-            color: #fff5ea;
+            color: #f0f4fa;
             text-shadow: 0 1px 2px black;
         }
         .option-label input {
@@ -104,16 +165,16 @@
         h1 {
             font-size: 36px;
             text-align: center;
-            color: #fff5ea;
+            color: #ffffff;
             text-shadow: 0 2px 5px rgba(0,0,0,0.5);
             margin-bottom: 8px;
         }
         .sub {
             text-align: center;
-            color: #fff5ea;
+            color: #cbd5e6;
             font-size: 0.95rem;
             margin-bottom: 32px;
-            border-bottom: 1px solid rgba(255,255,240,0.4);
+            border-bottom: 1px solid rgba(255,255,240,0.2);
             padding-bottom: 14px;
         }
         h2 {
@@ -121,8 +182,8 @@
             margin: 28px 0 18px 0;
             border-left: 7px solid #ffb347;
             padding-left: 18px;
-            color: #fff5ea;
-            text-shadow: 0 1px 3px black;
+            color: #f0f4fa;
+            text-shadow: 0 1px 2px black;
         }
         button[type="submit"] {
             background: #d45a2b;
@@ -141,23 +202,23 @@
             background: #b23c1a;
         }
         .follow-info {
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             border-left: 5px solid #ffb347;
             padding: 14px 20px;
             border-radius: 30px;
             margin: 30px 0 10px;
             text-align: center;
-            color: white;
+            color: #f0f4fa;
         }
         hr {
             margin: 28px 0 20px;
-            border-color: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.15);
         }
         .footer-text {
             text-align: center;
             font-size: 13px;
-            color: #fff5ea;
+            color: #cbd5e6;
             opacity: 0.9;
         }
         .credit {
@@ -165,150 +226,168 @@
             font-size: 8px;
             opacity: 0.6;
             margin-top: 20px;
-            color: #fff5ea;
+            color: #cbd5e6;
         }
         @media (max-width: 650px) {
             .glass-card {
                 padding: 25px 20px;
             }
+            h1 { font-size: 28px; }
+            h2 { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
-<div class="glass-card">
-    <h1>FORM SELEKSI MEMBER</h1>
-    <div class="sub">Sebelum bergabung, isilah form dengan jujur dan jelas.<br>Lakukan semua menjadi penilaian awal.</div>
-
-    <form id="registerForm" action="#" method="post">
-        <h2>1. Identitas</h2>
-        <div class="form-group">
-            <label>Nama asli :</label>
-            <input type="text" id="nama_asli" placeholder="Contoh: rama" required>
+    <div class="menu-container">
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <div class="menu-dropdown" id="menuDropdown">
+            <a href="home.html">🏠 Home</a>
+            <a href="web.html">📝 Daftar</a>
+            <a href="linktree.html">🔗 Linktree</a>
         </div>
-        <div class="form-group">
-            <label>Umur :</label>
-            <input type="number" id="umur" placeholder="15" required>
-        </div>
-        <div class="form-group">
-            <label>Asal kota :</label>
-            <input type="text" id="asal_kota" placeholder="Jakarta" required>
-        </div>
-
-        <h2>2. Riwayat Komunitas</h2>
-        <div class="form-group">
-            <label>Apakah kamu punya komunitas/marga lain?</label>
-            <textarea id="riwayat_komunitas" placeholder="Jika tidak ada tulis Tidak / jika ada tulis beserta nama marganya" rows="3" required></textarea>
-        </div>
-
-        <h2>3. Tujuan Bergabung</h2>
-        <div class="form-group">
-            <label>Apa alasan dan tujuan kamu masuk Marga IEP EAS?</label>
-            <textarea id="tujuan" placeholder="Tuliskan alasan dengan jelas..." rows="4" required></textarea>
-        </div>
-
-        <!-- 4. Pengetahuan Dasar -->
-        <h2>4. Pengetahuan Dasar</h2>
-        <label style="color:#fff5ea;">(Pilih minimal satu - wajib)</label>
-        
-        <div class="vertical-option">
-            <div class="option-label">
-                <input type="checkbox" id="iep" value="IEP">
-                <label for="iep">✈️ IEP → Sebutkan pesawat yang kamu ketahui</label>
-            </div>
-            <div class="sub-input">
-                <input type="text" id="jawaban_pesawat" placeholder="Contoh: Boeing 787, F-16, C-130">
-            </div>
-        </div>
-
-        <div class="vertical-option">
-            <div class="option-label">
-                <input type="checkbox" id="eas" value="EAS">
-                <label for="eas">🪐 EAS → Sebutkan planet yang kamu ketahui</label>
-            </div>
-            <div class="sub-input">
-                <input type="text" id="jawaban_planet" placeholder="Contoh: Mars, Jupiter, Saturnus">
-            </div>
-        </div>
-
-        <!-- 5. Komitmen -->
-        <h2>5. Komitmen</h2>
-        <div class="vertical-option">
-            <label>Apakah kamu siap membantu jika ada masalah di marga? (wajib)</label>
-            <div class="radio-group-horizontal">
-                <span><input type="radio" name="siap_membantu" value="Ya" id="siap_ya"> <label for="siap_ya">Ya</label></span>
-                <span><input type="radio" name="siap_membantu" value="Tidak" id="siap_tidak"> <label for="siap_tidak">Tidak</label></span>
-            </div>
-        </div>
-
-        <div class="vertical-option">
-            <label>Apakah kamu berjanji tidak membuat kerusuhan dan tidak menjatuhkan pihak lain? (wajib)</label>
-            <div class="radio-group-horizontal">
-                <span><input type="radio" name="berjanji" value="Ya, saya berjanji" id="janji_ya"> <label for="janji_ya">Ya, saya berjanji</label></span>
-                <span><input type="radio" name="berjanji" value="Tidak" id="janji_tidak"> <label for="janji_tidak">Tidak</label></span>
-            </div>
-        </div>
-
-        <div class="follow-info">
-            📢 Sebelum kirim jawaban:<br>
-            Follow akun marga: <strong>@marga.iepeas.ofc</strong>
-        </div>
-
-        <button type="submit">📱 Kirim Jawaban ke WhatsApp 📱</button>
-    </form>
-
-    <hr>
-    <div class="footer-text">
-        🗻 和の心 - Terima kasih sudah mendaftar.<br>Semoga kamu menjadi bagian dari komunitas yang solid dan positif.
     </div>
-    <div class="credit">©IEPEAS</div>
-</div>
 
-<script>
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+    <div class="glass-card">
+        <h1>🌸 FORM SELEKSI MEMBER 🌸</h1>
+        <div class="sub">Sebelum bergabung, isilah form dengan jujur dan jelas.<br>Lakukan semua menjadi penilaian awal.</div>
 
-        let iepChecked = document.getElementById('iep').checked;
-        let easChecked = document.getElementById('eas').checked;
-        if (!iepChecked && !easChecked) {
-            alert("❌ Wajib pilih minimal satu di bagian Pengetahuan Dasar (IEP atau EAS).");
-            return;
-        }
+        <form id="registerForm" action="#" method="post">
+            <h2>1. Identitas</h2>
+            <div class="form-group">
+                <label>Nama asli :</label>
+                <input type="text" id="nama_asli" placeholder="Contoh: Sato Ichiro" required>
+            </div>
+            <div class="form-group">
+                <label>Umur :</label>
+                <input type="number" id="umur" placeholder="20" required>
+            </div>
+            <div class="form-group">
+                <label>Asal kota :</label>
+                <input type="text" id="asal_kota" placeholder="Tokyo, Osaka, Kyoto, dll" required>
+            </div>
 
-        let siapMembantu = document.querySelector('input[name="siap_membantu"]:checked');
-        if (!siapMembantu) {
-            alert("❌ Wajib pilih Ya/Tidak pada pertanyaan 'Apakah kamu siap membantu...'");
-            return;
-        }
+            <h2>2. Riwayat Komunitas</h2>
+            <div class="form-group">
+                <label>Apakah kamu punya komunitas/marga lain?</label>
+                <textarea id="riwayat_komunitas" placeholder="Jika tidak ada, tulis: Tidak" rows="3" required></textarea>
+            </div>
 
-        let berjanji = document.querySelector('input[name="berjanji"]:checked');
-        if (!berjanji) {
-            alert("❌ Wajib pilih Ya/Tidak pada pertanyaan 'Apakah kamu berjanji tidak membuat kerusuhan...'");
-            return;
-        }
+            <h2>3. Tujuan Bergabung</h2>
+            <div class="form-group">
+                <label>Apa alasan dan tujuan kamu masuk Marga IEP EAS?</label>
+                <textarea id="tujuan" placeholder="Tuliskan alasan dengan jelas..." rows="4" required></textarea>
+            </div>
 
-        let nama = document.getElementById('nama_asli').value.trim();
-        let umur = document.getElementById('umur').value.trim();
-        let asalKota = document.getElementById('asal_kota').value.trim();
-        let riwayat = document.getElementById('riwayat_komunitas').value.trim();
-        let tujuan = document.getElementById('tujuan').value.trim();
-        let jawabanPesawat = document.getElementById('jawaban_pesawat').value.trim();
-        let jawabanPlanet = document.getElementById('jawaban_planet').value.trim();
+            <h2>4. Pengetahuan Dasar</h2>
+            <label style="color:#cbd5e6;">(Pilih minimal satu - wajib)</label>
+            <div class="vertical-option">
+                <div class="option-label">
+                    <input type="checkbox" id="iep" value="IEP">
+                    <label for="iep">✈️ IEP → Sebutkan pesawat yang kamu ketahui</label>
+                </div>
+                <div class="sub-input">
+                    <input type="text" id="jawaban_pesawat" placeholder="Contoh: Boeing 787, F-16, C-130">
+                </div>
+            </div>
+            <div class="vertical-option">
+                <div class="option-label">
+                    <input type="checkbox" id="eas" value="EAS">
+                    <label for="eas">🪐 EAS → Sebutkan planet yang kamu ketahui</label>
+                </div>
+                <div class="sub-input">
+                    <input type="text" id="jawaban_planet" placeholder="Contoh: Mars, Jupiter, Saturnus">
+                </div>
+            </div>
 
-        let pengetahuanText = "";
-        if (iepChecked) pengetahuanText += `IEP - Pesawat: ${jawabanPesawat || "(tidak diisi)"}\n`;
-        if (easChecked) pengetahuanText += `EAS - Planet: ${jawabanPlanet || "(tidak diisi)"}\n`;
+            <h2>5. Komitmen</h2>
+            <div class="vertical-option">
+                <label>Apakah kamu siap membantu jika ada masalah di marga? (wajib)</label>
+                <div class="radio-group-horizontal">
+                    <span><input type="radio" name="siap_membantu" value="Ya" id="siap_ya"> <label for="siap_ya">Ya</label></span>
+                    <span><input type="radio" name="siap_membantu" value="Tidak" id="siap_tidak"> <label for="siap_tidak">Tidak</label></span>
+                </div>
+            </div>
+            <div class="vertical-option">
+                <label>Apakah kamu berjanji tidak membuat kerusuhan dan tidak menjatuhkan pihak lain? (wajib)</label>
+                <div class="radio-group-horizontal">
+                    <span><input type="radio" name="berjanji" value="Ya, saya berjanji" id="janji_ya"> <label for="janji_ya">Ya, saya berjanji</label></span>
+                    <span><input type="radio" name="berjanji" value="Tidak" id="janji_tidak"> <label for="janji_tidak">Tidak</label></span>
+                </div>
+            </div>
 
-        let pesan = `*FORM SELEKSI MEMBER IEP EAS*\n\n` +
-                    `*1. Identitas*\nNama: ${nama}\nUmur: ${umur}\nAsal Kota: ${asalKota}\n\n` +
-                    `*2. Riwayat Komunitas*\n${riwayat}\n\n` +
-                    `*3. Tujuan Bergabung*\n${tujuan}\n\n` +
-                    `*4. Pengetahuan Dasar*\n${pengetahuanText}\n` +
-                    `*5. Komitmen*\nSiap membantu: ${siapMembantu.value}\nBerjanji tidak merusak: ${berjanji.value}\n\n` +
-                    `(Dikirim dari formulir online)`;
+            <div class="follow-info">
+                📢 Sebelum kirim jawaban:<br>
+                Follow akun marga: <strong>@marga.iepeas.ofc</strong>
+            </div>
+            <button type="submit">📱 Kirim Jawaban ke WhatsApp 📱</button>
+        </form>
 
-        let urlWA = `https://wa.me/6289515560507?text=${encodeURIComponent(pesan)}`;
-        window.open(urlWA, '_blank');
-    });
-</script>
+        <hr>
+        <div class="footer-text">
+            🗻 和の心 - Terima kasih sudah mendaftar.<br>Semoga kamu menjadi bagian dari komunitas yang solid dan positif.
+        </div>
+        <div class="credit">©IEPEAS</div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let iepChecked = document.getElementById('iep').checked;
+            let easChecked = document.getElementById('eas').checked;
+            if (!iepChecked && !easChecked) {
+                alert("❌ Wajib pilih minimal satu di bagian Pengetahuan Dasar (IEP atau EAS).");
+                return;
+            }
+
+            let siapMembantu = document.querySelector('input[name="siap_membantu"]:checked');
+            if (!siapMembantu) {
+                alert("❌ Wajib pilih Ya/Tidak pada pertanyaan 'Apakah kamu siap membantu...'");
+                return;
+            }
+
+            let berjanji = document.querySelector('input[name="berjanji"]:checked');
+            if (!berjanji) {
+                alert("❌ Wajib pilih Ya/Tidak pada pertanyaan 'Apakah kamu berjanji tidak membuat kerusuhan...'");
+                return;
+            }
+
+            let nama = document.getElementById('nama_asli').value.trim();
+            let umur = document.getElementById('umur').value.trim();
+            let asalKota = document.getElementById('asal_kota').value.trim();
+            let riwayat = document.getElementById('riwayat_komunitas').value.trim();
+            let tujuan = document.getElementById('tujuan').value.trim();
+            let jawabanPesawat = document.getElementById('jawaban_pesawat').value.trim();
+            let jawabanPlanet = document.getElementById('jawaban_planet').value.trim();
+
+            let pengetahuanText = "";
+            if (iepChecked) pengetahuanText += `IEP - Pesawat: ${jawabanPesawat || "(tidak diisi)"}\n`;
+            if (easChecked) pengetahuanText += `EAS - Planet: ${jawabanPlanet || "(tidak diisi)"}\n`;
+
+            let pesan = `*FORM SELEKSI MEMBER IEP EAS*\n\n` +
+                        `*1. Identitas*\nNama: ${nama}\nUmur: ${umur}\nAsal Kota: ${asalKota}\n\n` +
+                        `*2. Riwayat Komunitas*\n${riwayat}\n\n` +
+                        `*3. Tujuan Bergabung*\n${tujuan}\n\n` +
+                        `*4. Pengetahuan Dasar*\n${pengetahuanText}\n` +
+                        `*5. Komitmen*\nSiap membantu: ${siapMembantu.value}\nBerjanji tidak merusak: ${berjanji.value}\n\n` +
+                        `(Dikirim dari formulir online)`;
+
+            let urlWA = `https://wa.me/6289515560507?text=${encodeURIComponent(pesan)}`;
+            window.open(urlWA, '_blank');
+        });
+
+        // Menu dropdown
+        const menuToggle = document.getElementById('menuToggle');
+        const menuDropdown = document.getElementById('menuDropdown');
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuDropdown.classList.toggle('show');
+        });
+        document.addEventListener('click', function(event) {
+            if (!menuToggle.contains(event.target) && !menuDropdown.contains(event.target)) {
+                menuDropdown.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
