@@ -3,89 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Music App Pro</title>
+    <title>Music Player Ultra</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-        body { font-family: 'Roboto', sans-serif; background-color: #000; color: white; -webkit-tap-highlight-color: transparent; }
-        input[type="range"] { accent-color: #f00; cursor: pointer; }
-        .active-tab { color: white; border-bottom: 2px solid white; }
-        ::-webkit-scrollbar { width: 0px; }
-        .yt-shadow { box-shadow: 0 -4px 30px rgba(0,0,0,0.9); }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #000; color: white; -webkit-tap-highlight-color: transparent; }
+        .yt-card { background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%); border: 1px solid rgba(255,255,255,0.08); }
+        input[type="range"] { accent-color: #ff0000; height: 4px; }
+        .active-tab { color: #ff0000; border-bottom: 2px solid #ff0000; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .animate-player { animation: slideUp 0.4s cubic-bezier(0, 0, 0.2, 1); }
     </style>
 </head>
-<body class="flex flex-col min-h-screen pb-24">
+<body class="flex flex-col min-h-screen pb-28">
 
-    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-lg p-4 border-b border-zinc-900">
-        <div class="flex items-center gap-3 mb-4">
-            <div class="w-9 h-9 bg-red-600 rounded-full flex items-center justify-center shadow-lg shadow-red-900/20">
-                <svg width="20" height="20" fill="white" viewBox="0 0 256 256"><path d="M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z"></path></svg>
+    <header class="sticky top-0 z-50 bg-black/80 backdrop-blur-xl p-4 border-b border-white/5">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center shadow-lg shadow-red-600/20">
+                    <svg width="16" height="16" fill="white" viewBox="0 0 256 256"><path d="M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z"></path></svg>
+                </div>
+                <span class="text-lg font-extrabold tracking-tighter italic">VIBE PLAYER</span>
             </div>
-            <h1 class="text-xl font-bold tracking-tighter">Music App <span class="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400 ml-1 uppercase">v3.0</span></h1>
+            <span id="server-status" class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest bg-zinc-900 px-2 py-1 rounded-full border border-white/5">Server: Standby</span>
         </div>
-        <div class="flex gap-2">
-            <input type="text" id="search-input" placeholder="Cari lagu apa aja..." class="flex-1 bg-zinc-900 border-none rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-red-600 outline-none transition-all">
-            <button onclick="searchMusic()" class="bg-white text-black px-6 py-3 rounded-xl text-sm font-bold active:scale-95 transition-all">Cari</button>
+        <div class="relative group">
+            <input type="text" id="search-input" placeholder="Cari musik favoritmu..." class="w-full bg-zinc-900 border-none rounded-2xl px-5 py-3.5 text-sm focus:ring-2 focus:ring-red-600/50 outline-none transition-all pr-12">
+            <button onclick="searchMusic()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white text-black p-2 rounded-xl active:scale-90 transition-all">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+            </button>
         </div>
     </header>
 
-    <nav class="flex justify-around bg-black border-b border-zinc-900 text-zinc-500 font-bold text-[11px] uppercase tracking-widest">
-        <button id="tab-online" onclick="switchTab('online')" class="py-4 px-8 active-tab transition-all">Online</button>
-        <button id="tab-offline" onclick="switchTab('offline')" class="py-4 px-8 transition-all">Offline</button>
+    <nav class="flex bg-black text-zinc-500 font-bold text-[11px] uppercase tracking-[0.2em]">
+        <button id="tab-online" onclick="switchTab('online')" class="flex-1 py-4 active-tab transition-all">Streaming</button>
+        <button id="tab-offline" onclick="switchTab('offline')" class="flex-1 py-4 transition-all">Library</button>
     </nav>
 
     <main id="list-container" class="flex-1 p-4 space-y-3 overflow-y-auto"></main>
 
-    <footer id="player-bar" class="fixed bottom-0 left-0 right-0 z-50 bg-zinc-950 border-t border-zinc-800 p-3 yt-shadow hidden animate-slide-up" onclick="openPlayerModal()">
-        <div class="absolute top-0 left-0 h-0.5 bg-red-600 transition-all duration-300" id="mini-progress"></div>
+    <footer id="player-bar" class="fixed bottom-0 left-0 right-0 z-[60] bg-zinc-950/90 backdrop-blur-2xl border-t border-white/5 p-3 hidden animate-player">
+        <div class="absolute top-0 left-0 h-[3px] bg-red-600 shadow-[0_0_10px_#ff0000]" id="mini-progress"></div>
         <div class="flex items-center gap-3">
-            <img id="cover-art" src="" class="w-12 h-12 rounded-lg bg-zinc-800 object-cover border border-white/5">
-            <div class="flex-1 min-w-0">
-                <h4 id="song-title" class="text-sm font-bold truncate">Judul Lagu</h4>
-                <p id="artist-name" class="text-xs text-zinc-500 truncate">Artis</p>
+            <div class="relative" onclick="openPlayerModal()">
+                <img id="cover-art" src="" class="w-12 h-12 rounded-xl object-cover bg-zinc-800 shadow-xl border border-white/10">
+                <div class="absolute inset-0 bg-black/20 flex items-center justify-center rounded-xl">
+                    <svg width="16" height="16" fill="white" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                </div>
+            </div>
+            <div class="flex-1 min-w-0" onclick="openPlayerModal()">
+                <h4 id="song-title" class="text-[13px] font-bold truncate pr-2">Judul Lagu</h4>
+                <p id="artist-name" class="text-[10px] text-zinc-500 uppercase tracking-wider truncate">Artis</p>
             </div>
             <div class="flex items-center gap-1">
-                <button onclick="downloadSong(event)" id="dl-btn" class="p-2 text-zinc-400 active:scale-90"><svg width="22" height="22" fill="currentColor" viewBox="0 0 256 256"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V40a8,8,0,0,0-16,0v84.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"></path></svg></button>
-                <button onclick="togglePlay(event)" class="p-2 text-white active:scale-90"><svg id="mini-play-icon" width="32" height="32" fill="currentColor" viewBox="0 0 256 256"><path d="M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z"></path></svg></button>
+                <button id="dl-btn" onclick="downloadSong(event)" class="p-2.5 text-zinc-500 active:scale-90"><svg width="22" height="22" fill="currentColor" viewBox="0 0 256 256"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V40a8,8,0,0,0-16,0v84.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"></path></svg></button>
+                <button onclick="togglePlay(event)" class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-black active:scale-90 transition-all">
+                    <svg id="mini-play-icon" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z"></path></svg>
+                </button>
             </div>
         </div>
     </footer>
 
-    <div id="player-modal" class="fixed inset-0 z-[60] bg-black p-8 flex flex-col translate-y-full transition-transform duration-500 hidden overflow-hidden">
-        <button onclick="closePlayerModal()" class="mb-6 text-zinc-500 active:scale-90"><svg width="36" height="36" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></button>
-        <div class="flex-1 flex flex-col items-center justify-center text-center">
-            <img id="modal-cover" src="" class="w-full aspect-square rounded-2xl shadow-2xl mb-12 object-cover border border-white/5">
-            <h2 id="modal-title" class="text-2xl font-bold mb-2 truncate w-full px-2 italic">Judul Lagu</h2>
-            <p id="modal-artist" class="text-zinc-500 text-lg mb-10">Nama Artis</p>
-            
-            <div class="w-full mb-10">
-                <input type="range" id="modal-seek" class="w-full h-1 bg-zinc-800 rounded-full appearance-none mb-3" value="0">
-                <div class="flex justify-between text-[12px] font-mono text-zinc-600"><span id="cur-time">0:00</span><span id="dur-time">0:00</span></div>
+    <div id="player-modal" class="fixed inset-0 z-[70] bg-[#050505] p-8 flex flex-col translate-y-full transition-transform duration-500 hidden">
+        <button onclick="closePlayerModal()" class="w-12 h-12 flex items-center justify-center bg-zinc-900 rounded-full text-zinc-400 active:scale-90 mb-4"><svg width="28" height="28" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></button>
+        <div class="flex-1 flex flex-col items-center justify-center">
+            <div class="relative w-full max-w-[320px] aspect-square mb-12">
+                <img id="modal-cover" src="" class="w-full h-full rounded-[2.5rem] object-cover shadow-[0_20px_50px_rgba(255,0,0,0.15)] border border-white/5">
+                <div class="absolute -bottom-2 -right-2 bg-red-600 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"><svg width="24" height="24" fill="white" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm40-88a8,8,0,0,1-8,8H136v24a8,8,0,0,1-16,0V136H96a8,8,0,0,1,0-16h24V96a8,8,0,0,1,16,0v24h24A8,8,0,0,1,168,128Z"></path></svg></div>
             </div>
-
-            <div class="flex items-center gap-10">
-                <button onclick="prevSong(event)" class="text-white active:scale-90"><svg width="36" height="36" fill="currentColor" viewBox="0 0 256 256"><path d="M208,40V216a8,8,0,0,1-13.66,5.66L112,139.31V216a8,8,0,0,1-13.66,5.66l-80-80a8,8,0,0,1,0-11.32l80-80A8,8,0,0,1,112,56v76.69l82.34-82.35A8,8,0,0,1,208,40Z"></path></svg></button>
-                <button onclick="togglePlay(event)" class="w-20 h-20 bg-white text-black rounded-full flex items-center justify-center shadow-lg active:scale-95"><svg id="modal-play-icon" width="40" height="40" fill="currentColor" viewBox="0 0 256 256"><path d="M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z"></path></svg></button>
-                <button onclick="nextSong(event)" class="text-white active:scale-90"><svg width="36" height="36" fill="currentColor" viewBox="0 0 256 256"><path d="M208,40V216a8,8,0,0,1-16,0V139.31L109.66,221.66A8,8,0,0,1,96,216V139.31L21.66,213.66A8,8,0,0,1,8,208V48a8,8,0,0,1,13.66-5.66L96,116.69V40a8,8,0,0,1,16,0v76.69l82.34-82.35A8,8,0,0,1,208,40Z"></path></svg></button>
+            <h2 id="modal-title" class="text-2xl font-black mb-1 truncate w-full text-center px-4 tracking-tight">Judul Lagu</h2>
+            <p id="modal-artist" class="text-red-500 font-bold text-sm uppercase tracking-widest mb-10">Nama Artis</p>
+            <div class="w-full px-4 mb-10">
+                <input type="range" id="modal-seek" class="w-full mb-3 appearance-none bg-zinc-900 rounded-full overflow-hidden" value="0">
+                <div class="flex justify-between text-[10px] font-mono text-zinc-500 font-bold">
+                    <span id="cur-time">00:00</span><span id="dur-time">00:00</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-12">
+                <button onclick="prevSong(event)" class="text-zinc-400 active:scale-75 transition-all"><svg width="40" height="40" fill="currentColor" viewBox="0 0 256 256"><path d="M208,40V216a8,8,0,0,1-13.66,5.66L112,139.31V216a8,8,0,0,1-13.66,5.66l-80-80a8,8,0,0,1,0-11.32l80-80A8,8,0,0,1,112,56v76.69l82.34-82.35A8,8,0,0,1,208,40Z"></path></svg></button>
+                <button onclick="togglePlay(event)" class="w-24 h-24 bg-white text-black rounded-full flex items-center justify-center shadow-2xl active:scale-90 transition-all"><svg id="modal-play-icon" width="40" height="40" fill="currentColor" viewBox="0 0 256 256"><path d="M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z"></path></svg></button>
+                <button onclick="nextSong(event)" class="text-zinc-400 active:scale-75 transition-all"><svg width="40" height="40" fill="currentColor" viewBox="0 0 256 256"><path d="M208,40V216a8,8,0,0,1-16,0V139.31L109.66,221.66A8,8,0,0,1,96,216V139.31L21.66,213.66A8,8,0,0,1,8,208V48a8,8,0,0,1,13.66-5.66L96,116.69V40a8,8,0,0,1,16,0v76.69l82.34-82.35A8,8,0,0,1,208,40Z"></path></svg></button>
             </div>
         </div>
     </div>
 
-    <audio id="audio-player"></audio>
+    <audio id="audio-player" crossorigin="anonymous"></audio>
 
     <script>
-        const db = new Dexie("MusicDB");
+        const db = new Dexie("VibeDB");
         db.version(1).stores({ songs: "id, title, artist, cover, blob" });
 
         const audio = document.getElementById('audio-player');
-        // PROXY CORS + API CADANGAN (INVIDIOUS)
-        const proxy = "https://corsproxy.io/?";
-        const instances = [
+        // PROXY SAKTI
+        const proxies = ["https://corsproxy.io/?", "https://api.allorigins.win/raw?url="];
+        const pipedList = [
             'https://api-piped.mha.fi',
             'https://pipedapi.drgns.space',
             'https://pipedapi.astreapp.ca',
-            'https://invidious.snopyta.org/api/v1'
+            'https://pipedapi.kavin.rocks'
         ];
 
         let currentPlaylist = [];
@@ -96,48 +112,39 @@
             const query = document.getElementById('search-input').value;
             if(!query) return;
             switchTab('online');
-            document.getElementById('list-container').innerHTML = "<div class='flex flex-col items-center justify-center py-20'><div class='w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin mb-4'></div><p class='text-zinc-600 text-sm'>Mencoba jalur darurat...</p></div>";
+            document.getElementById('list-container').innerHTML = `<div class="flex flex-col items-center py-20 animate-pulse text-zinc-600"><div class="w-10 h-10 border-4 border-red-600 border-t-transparent rounded-full animate-spin mb-4"></div><p>Menerobos Blokade...</p></div>`;
+            document.getElementById('server-status').innerText = "Status: Mencari Jalur...";
 
-            for (let base of instances) {
-                try {
-                    // Coba pake proxy biar gak kena CORS/Block GitHub
-                    const url = base.includes('invidious') 
-                        ? `${proxy}${base}/search?q=${encodeURIComponent(query)}&type=video`
-                        : `${proxy}${base}/search?q=${encodeURIComponent(query)}&filter=music_songs`;
-
-                    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
-                    if (!res.ok) continue;
-                    const data = await res.json();
-                    
-                    const streams = base.includes('invidious') ? data : data.streams;
-                    
-                    if(streams && streams.length > 0) {
-                        currentPlaylist = streams.map(s => ({
-                            title: s.title,
-                            uploaderName: s.uploaderName || s.author,
-                            thumbnail: s.thumbnail || (s.videoThumbnails ? s.videoThumbnails[0].url : ""),
-                            url: s.url || `/watch?v=${s.videoId}`
-                        }));
-                        window.lastUsedInstance = base;
-                        renderList(currentPlaylist);
-                        return;
-                    }
-                } catch (e) { console.log("Instance failed, retrying..."); }
+            // Strategi: Coba Piped dengan rotasi Proxy
+            for (let proxy of proxies) {
+                for (let base of pipedList) {
+                    try {
+                        const url = `${proxy}${encodeURIComponent(base + '/search?q=' + query + '&filter=music_songs')}`;
+                        const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+                        const data = await res.json();
+                        
+                        if(data.streams && data.streams.length > 0) {
+                            currentPlaylist = data.streams;
+                            window.activeBase = base;
+                            window.activeProxy = proxy;
+                            renderList(currentPlaylist);
+                            document.getElementById('server-status').innerText = "Status: Online (Jalur Aman)";
+                            return;
+                        }
+                    } catch (e) { console.log("Jalur Gagal, ganti..."); }
+                }
             }
-            document.getElementById('list-container').innerHTML = "<p class='text-center py-20 text-red-500 font-bold'>Gagal Total! 🗿<br><span class='text-[10px] text-zinc-700 font-normal'>Semua server memblokir request. Coba buka via VPN.</span></p>";
+            document.getElementById('list-container').innerHTML = `<p class="text-center py-20 text-red-500 font-bold uppercase tracking-tighter">Semua Server Blokir 🗿<br><span class="text-[10px] text-zinc-600 font-normal">Coba nyalakan VPN atau ganti koneksi Internet.</span></p>`;
         }
 
         function renderList(list) {
             const container = document.getElementById('list-container');
             container.innerHTML = list.map((song, i) => `
-                <div onclick="playSong(${i})" class="flex items-center gap-4 p-3 hover:bg-zinc-900/50 rounded-2xl cursor-pointer transition-all active:scale-[0.98]">
-                    <img src="${song.thumbnail || song.cover}" class="w-14 h-14 rounded-xl object-cover bg-zinc-800 shadow-lg">
+                <div onclick="playSong(${i})" class="yt-card flex items-center gap-4 p-4 rounded-3xl cursor-pointer active:scale-95 transition-all">
+                    <img src="${song.thumbnail || song.cover}" class="w-14 h-14 rounded-2xl object-cover bg-zinc-800">
                     <div class="flex-1 min-w-0">
-                        <div class="text-[15px] font-bold truncate">${song.title}</div>
-                        <div class="text-[11px] text-zinc-500 uppercase tracking-widest truncate mt-0.5">${song.uploaderName || song.artist}</div>
-                    </div>
-                    <div class="w-8 h-8 flex items-center justify-center rounded-full border border-zinc-800">
-                        <svg width="14" height="14" fill="white" viewBox="0 0 256 256"><path d="M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z"></path></svg>
+                        <div class="text-[14px] font-bold truncate">${song.title}</div>
+                        <div class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mt-1">${song.uploaderName || song.artist}</div>
                     </div>
                 </div>
             `).join('');
@@ -156,33 +163,23 @@
                 audio.play();
             } else {
                 let found = false;
-                for (let base of instances) {
+                for (let proxy of proxies) {
                     try {
-                        const streamUrl = base.includes('invidious') 
-                            ? `${proxy}${base}/streams/${vId}`
-                            : `${proxy}${base}/streams/${vId}`;
-
-                        const res = await fetch(streamUrl, { signal: AbortSignal.timeout(5000) });
+                        const res = await fetch(`${proxy}${encodeURIComponent(window.activeBase + '/streams/' + vId)}`);
                         const data = await res.json();
-                        const stream = (data.audioStreams ? data.audioStreams.find(s => s.format === 'M4A') : null) 
-                                        || (data.adaptiveFormats ? data.adaptiveFormats.find(f => f.type.includes('audio')) : null)
-                                        || (data.audioStreams ? data.audioStreams[0] : null);
-                        
-                        if(stream) {
-                            audio.src = stream.url;
-                            audio.play();
-                            found = true;
-                            break;
-                        }
+                        const stream = data.audioStreams.find(s => s.format === 'M4A') || data.audioStreams[0];
+                        audio.src = stream.url;
+                        audio.play();
+                        found = true;
+                        break;
                     } catch (e) {}
                 }
-                if(!found) alert("Gagal mengambil audio. Server lagi sensi.");
+                if(!found) alert("Gagal narik audio. Server lagi galak!");
             }
             updateMediaSession(song);
         }
 
         function updateUI(song) {
-            const elements = ['song-title', 'modal-title', 'artist-name', 'modal-artist'];
             document.getElementById('song-title').innerText = document.getElementById('modal-title').innerText = song.title;
             document.getElementById('artist-name').innerText = document.getElementById('modal-artist').innerText = song.uploaderName || song.artist;
             document.getElementById('cover-art').src = document.getElementById('modal-cover').src = song.thumbnail || song.cover;
@@ -194,10 +191,8 @@
 
         audio.onplay = audio.onpause = () => {
             const icons = [document.getElementById('mini-play-icon'), document.getElementById('modal-play-icon')];
-            const path = audio.paused 
-                ? 'M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z' 
-                : 'M208,48V208a16,16,0,0,1-32,0V48a16,16,0,0,1,32,0ZM80,32A16,16,0,0,0,64,48V208a16,16,0,0,0,32,0V48A16,16,0,0,0,80,32Z';
-            icons.forEach(i => i.innerHTML = `<path d="${path}"></path>`);
+            const svg = audio.paused ? '<path d="M240,128a15.89,15.89,0,0,1-8.16,13.93l-176,101A15.91,15.91,0,0,1,32,229V27a15.91,15.91,0,0,1,23.84-13.93l176,101A15.89,15.89,0,0,1,240,128Z"></path>' : '<path d="M208,48V208a16,16,0,0,1-32,0V48a16,16,0,0,1,32,0ZM80,32A16,16,0,0,0,64,48V208a16,16,0,0,0,32,0V48A16,16,0,0,0,80,32Z"></path>';
+            icons.forEach(i => i.innerHTML = svg);
         };
 
         function openPlayerModal() { document.getElementById('player-modal').classList.remove('hidden', 'translate-y-full'); }
@@ -211,31 +206,31 @@
             document.getElementById('dur-time').innerText = formatTime(audio.duration);
         };
         document.getElementById('modal-seek').oninput = (e) => audio.currentTime = (e.target.value / 100) * audio.duration;
-        function formatTime(s) { if(isNaN(s)) return "0:00"; const m=Math.floor(s/60); const sec=Math.floor(s%60); return `${m}:${sec < 10 ? '0'+sec : sec}`; }
+        function formatTime(s) { const m=Math.floor(s/60); const sec=Math.floor(s%60); return `${m}:${sec < 10 ? '0'+sec : sec}`; }
 
         async function downloadSong(e) {
             e.stopPropagation();
             const song = currentPlaylist[currentIndex];
             const btn = document.getElementById('dl-btn');
             try {
-                btn.classList.add('animate-bounce');
-                const res = await fetch(proxy + audio.src);
+                btn.classList.add('animate-pulse', 'text-white');
+                const res = await fetch(window.activeProxy + encodeURIComponent(audio.src));
                 const blob = await res.blob();
                 await db.songs.put({ id: song.url, title: song.title, artist: song.uploaderName, cover: song.thumbnail, blob: blob });
-                alert("Berhasil disimpan offline! 🚀");
-            } catch (e) { alert("Gagal download. Coba putar lagunya dulu."); }
-            btn.classList.remove('animate-bounce');
+                alert("Tersimpan Offline! 🔥");
+            } catch (e) { alert("Download gagal. Jalur diblokir."); }
+            btn.classList.remove('animate-pulse', 'text-white');
         }
 
         async function switchTab(tab) {
             currentTab = tab;
-            document.getElementById('tab-online').className = tab === 'online' ? "py-4 px-8 active-tab" : "py-4 px-8 text-zinc-500";
-            document.getElementById('tab-offline').className = tab === 'offline' ? "py-4 px-8 active-tab" : "py-4 px-8 text-zinc-500";
+            document.getElementById('tab-online').className = tab === 'online' ? "flex-1 py-4 active-tab" : "flex-1 py-4";
+            document.getElementById('tab-offline').className = tab === 'offline' ? "flex-1 py-4 active-tab" : "flex-1 py-4";
             if(tab === 'offline') {
                 currentPlaylist = await db.songs.toArray();
                 renderList(currentPlaylist);
             } else {
-                document.getElementById('list-container').innerHTML = "<p class='text-center py-20 text-zinc-700'>Cari lagu baru di kolom pencarian.</p>";
+                document.getElementById('list-container').innerHTML = `<p class="text-center py-20 text-zinc-700">Gunakan kolom cari untuk lagu online.</p>`;
             }
         }
 
