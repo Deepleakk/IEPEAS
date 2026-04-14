@@ -19,7 +19,7 @@
             overflow-x: hidden;
         }
 
-        /* Menu titik tiga - tombol kecil (50px) */
+        /* Tombol titik tiga (kecil) */
         .menu-container {
             position: fixed;
             top: 20px;
@@ -47,7 +47,7 @@
             transform: scale(1.05);
         }
 
-        /* DROPDOWN FULL SCREEN */
+        /* DROPDOWN FULL SCREEN - item di ATAS */
         .menu-dropdown {
             position: fixed;
             top: 0;
@@ -60,8 +60,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 30px;
+            gap: 20px;
+            padding-top: 120px; /* jarak dari atas */
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -70,48 +70,40 @@
             opacity: 1;
             visibility: visible;
         }
+        /* Item menu - tanpa card, hanya teks putih */
         .menu-dropdown a {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
             color: white;
             text-decoration: none;
-            padding: 15px 30px;
-            border-radius: 60px;
+            padding: 10px 20px;
+            background: none;
+            border: none;
             transition: 0.2s;
-            background: rgba(255,255,255,0.05);
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
-            backdrop-filter: blur(4px);
         }
         .menu-dropdown a:hover {
-            background: #3b82f6;
+            color: #3b82f6;
             transform: scale(1.05);
         }
-        /* Tombol close (X) di pojok kanan atas */
+        /* Tombol X - kecil, di pojok kanan atas */
         .menu-close {
             position: absolute;
             top: 30px;
             right: 30px;
-            font-size: 48px;
+            font-size: 32px;
             cursor: pointer;
             color: white;
             background: none;
             border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: 0.2s;
+            z-index: 101;
         }
         .menu-close:hover {
-            background: rgba(255,255,255,0.2);
             transform: rotate(90deg);
+            color: #ffb347;
         }
 
-        /* Konten lain (sama seperti sebelumnya) */
+        /* Konten utama (sama seperti sebelumnya, tidak diubah) */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -282,7 +274,8 @@
             .hero h1 { font-size: 36px; }
             .keunggulan h2, .tentang-section h2, .peraturan-container h3 { font-size: 1.5rem; }
             .feature-list { padding: 20px; }
-            .menu-dropdown a { font-size: 1.8rem; width: 90%; }
+            .menu-dropdown a { font-size: 1.8rem; }
+            .menu-dropdown { padding-top: 100px; }
         }
     </style>
 </head>
@@ -386,22 +379,15 @@
             }
         });
 
-        // Dropdown menu full screen
+        // Dropdown menu
         const menuToggle = document.getElementById('menuToggle');
         const menuDropdown = document.getElementById('menuDropdown');
         const menuClose = document.getElementById('menuClose');
-        function openMenu() {
-            menuDropdown.classList.add('show');
-        }
-        function closeMenu() {
-            menuDropdown.classList.remove('show');
-        }
-        menuToggle.addEventListener('click', openMenu);
-        menuClose.addEventListener('click', closeMenu);
-        // Tutup jika klik di luar (opsional)
+        menuToggle.addEventListener('click', () => menuDropdown.classList.add('show'));
+        menuClose.addEventListener('click', () => menuDropdown.classList.remove('show'));
         menuDropdown.addEventListener('click', (e) => {
-            if (e.target === menuDropdown) closeMenu();
+            if (e.target === menuDropdown) menuDropdown.classList.remove('show');
         });
     </script>
 </body>
-</html>
+    </html>
