@@ -19,7 +19,7 @@
             overflow-x: hidden;
         }
 
-        /* Menu titik tiga ukuran normal (50px) */
+        /* Menu titik tiga - tombol kecil (50px) */
         .menu-container {
             position: fixed;
             top: 20px;
@@ -46,40 +46,72 @@
             color: white;
             transform: scale(1.05);
         }
+
+        /* DROPDOWN FULL SCREEN */
         .menu-dropdown {
-            position: absolute;
-            top: 60px;
+            position: fixed;
+            top: 0;
             left: 0;
-            background: rgba(15,25,45,0.96);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 10px 0;
-            min-width: 160px;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 15, 28, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
-            border: 1px solid rgba(59,130,246,0.4);
+            transition: all 0.3s ease;
         }
         .menu-dropdown.show {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
         }
         .menu-dropdown a {
-            display: block;
-            padding: 10px 20px;
-            color: #cbd5e6;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
             text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 60px;
             transition: 0.2s;
-            font-size: 1rem;
+            background: rgba(255,255,255,0.05);
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: blur(4px);
         }
         .menu-dropdown a:hover {
             background: #3b82f6;
+            transform: scale(1.05);
+        }
+        /* Tombol close (X) di pojok kanan atas */
+        .menu-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 48px;
+            cursor: pointer;
             color: white;
+            background: none;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .menu-close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
         }
 
-        /* Konten lain (sama seperti sebelumnya, tidak diubah) */
+        /* Konten lain (sama seperti sebelumnya) */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -250,6 +282,7 @@
             .hero h1 { font-size: 36px; }
             .keunggulan h2, .tentang-section h2, .peraturan-container h3 { font-size: 1.5rem; }
             .feature-list { padding: 20px; }
+            .menu-dropdown a { font-size: 1.8rem; width: 90%; }
         }
     </style>
 </head>
@@ -257,6 +290,7 @@
     <div class="menu-container">
         <div class="menu-toggle" id="menuToggle">☰</div>
         <div class="menu-dropdown" id="menuDropdown">
+            <div class="menu-close" id="menuClose">✕</div>
             <a href="home.html">🏠 Home</a>
             <a href="web.html">📝 Daftar</a>
             <a href="linktree.html">🔗 Linktree</a>
@@ -352,16 +386,21 @@
             }
         });
 
+        // Dropdown menu full screen
         const menuToggle = document.getElementById('menuToggle');
         const menuDropdown = document.getElementById('menuDropdown');
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menuDropdown.classList.toggle('show');
-        });
-        document.addEventListener('click', function(event) {
-            if (!menuToggle.contains(event.target) && !menuDropdown.contains(event.target)) {
-                menuDropdown.classList.remove('show');
-            }
+        const menuClose = document.getElementById('menuClose');
+        function openMenu() {
+            menuDropdown.classList.add('show');
+        }
+        function closeMenu() {
+            menuDropdown.classList.remove('show');
+        }
+        menuToggle.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        // Tutup jika klik di luar (opsional)
+        menuDropdown.addEventListener('click', (e) => {
+            if (e.target === menuDropdown) closeMenu();
         });
     </script>
 </body>
