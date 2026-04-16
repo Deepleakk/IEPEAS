@@ -16,37 +16,6 @@
             font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             color: #e2e8f0;
             overflow-x: hidden;
-            position: relative;
-        }
-        /* Animasi hujan */
-        .rain-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .rain {
-            position: absolute;
-            top: -20px;
-            background: rgba(180, 220, 255, 0.5);
-            width: 1.5px;
-            height: 30px;
-            border-radius: 2px;
-            animation: rainFall linear infinite;
-        }
-        @keyframes rainFall {
-            0% {
-                transform: translateY(-30px);
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0.2;
-            }
         }
         /* Menu titik tiga */
         .menu-container {
@@ -127,7 +96,7 @@
             transform: rotate(90deg);
             color: #ffb347;
         }
-        /* Konten utama */
+        /* Konten home */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -306,9 +275,7 @@
     </style>
 </head>
 <body>
-    <!-- Tempat hujan -->
-    <div class="rain-container" id="rainContainer"></div>
-
+    <!-- Menu titik tiga -->
     <div class="menu-container">
         <div class="menu-toggle" id="menuToggle">☰</div>
         <div class="menu-dropdown" id="menuDropdown">
@@ -379,37 +346,10 @@
         <div class="credit">©IEPEAS</div>
     </div>
 
+    <!-- Panggil efek hujan (rain.js harus satu folder) -->
+    <script src="rain.js"></script>
+
     <script>
-        // Membuat hujan bertahap: 150 butiran, muncul satu per satu setiap 30ms
-        function addRainDrop() {
-            const container = document.getElementById('rainContainer');
-            const rain = document.createElement('div');
-            rain.classList.add('rain');
-            // variasi acak
-            const height = 15 + Math.random() * 40;
-            const width = 1 + Math.random() * 2;
-            const duration = 0.8 + Math.random() * 1.5;
-            const delay = Math.random() * 10; // delay tetap acak agar jatuhnya tidak serempak
-            const leftPos = Math.random() * 100;
-            rain.style.height = height + 'px';
-            rain.style.width = width + 'px';
-            rain.style.animationDuration = duration + 's';
-            rain.style.animationDelay = delay + 's';
-            rain.style.left = leftPos + '%';
-            container.appendChild(rain);
-        }
-
-        let count = 0;
-        const totalRain = 150;
-        const interval = setInterval(() => {
-            if (count < totalRain) {
-                addRainDrop();
-                count++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 30); // setiap 30ms muncul 1 butir -> total 150 butir dalam 4.5 detik
-
         // Easter egg (klik judul)
         const title = document.getElementById('iepeasTitle');
         function createFallingEmoji(emoji, xPos) {
@@ -423,16 +363,16 @@
             setTimeout(() => el.remove(), duration * 1000);
         }
         title.addEventListener('click', () => {
-            const countEmoji = 18 + Math.floor(Math.random() * 12);
+            const count = 18 + Math.floor(Math.random() * 12);
             const emojis = ['✈️', '🌟', '⭐', '🚀', '🛸', '💫', '🌠'];
-            for (let i = 0; i < countEmoji; i++) {
+            for (let i = 0; i < count; i++) {
                 const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
                 const randomX = Math.random() * window.innerWidth;
                 setTimeout(() => createFallingEmoji(randomEmoji, randomX), Math.random() * 400);
             }
         });
 
-        // Dropdown menu
+        // Menu dropdown
         const menuToggle = document.getElementById('menuToggle');
         const menuDropdown = document.getElementById('menuDropdown');
         const menuClose = document.getElementById('menuClose');
