@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linktree - Marga IEPEAS</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linktree - IEPEAS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,36 +10,21 @@
         <div class="menu-toggle" id="menuToggle">☰</div>
         <div class="menu-dropdown" id="menuDropdown">
             <div class="menu-close" id="menuClose">✕</div>
-            <a href="home.html">🏠 Home</a>
-            <a href="web.html">📝 Daftar</a>
-            <a href="linktree.html">🔗 Linktree</a>
+            <a href="home.html">🏠 Home</a><a href="web.html">📝 Daftar</a><a href="linktree.html">🔗 Linktree</a>
         </div>
     </div>
-
-    <div class="container" style="max-width: 600px;">
-        <div class="profile" style="margin-bottom: 30px;">
-            <h1 style="font-size: 48px;">🌸 IEPEAS 🌸</h1>
-            <p style="opacity: 0.8;">Marga Komunitas Edukasi & Solidaritas</p>
-        </div>
-
-        <a href="https://www.tiktok.com/@marga.iepeas.ofc?_r=1&_t=ZS-95VbnRi6CnN" class="link-card" target="_blank">🎵 TikTok Marga</a>
-        <a href="https://www.tiktok.com/@storyy_rama02?_r=1&_t=ZS-95VbljsXv9B" class="link-card" target="_blank">👤 TikTok Owner</a>
-        <a href="https://chat.whatsapp.com/GMp0cUpgDjp3xJXsl7CojT?mode=gi_t" class="link-card" target="_blank">💬 Grup WhatsApp</a>
-        <a href="https://github.com/Deepleakk" class="link-card" target="_blank">🐙 GitHub</a>
-        <a href="web.html" class="link-card" style="background: var(--accent-blue); font-weight: bold;">📝 Form Pendaftaran</a>
-
+    <div class="container" style="max-width:600px;">
+        <h1 style="font-size:48px;">🌸 IEPEAS 🌸</h1>
+        <p style="margin-bottom:30px;">Marga Komunitas Edukasi</p>
+        <a href="https://www.tiktok.com/@marga.iepeas.ofc" class="link-card" target="_blank">🎵 TikTok Marga</a>
+        <a href="https://chat.whatsapp.com/GMp0cUpgDjp3xJXsl7CojT" class="link-card" target="_blank">💬 Grup WhatsApp</a>
+        <a href="web.html" class="link-card" style="background:#3b82f6;">📝 Form Pendaftaran</a>
         <div class="credit">©IEPEAS</div>
     </div>
-
     <script src="rain.js"></script>
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const menuDropdown = document.getElementById('menuDropdown');
-        const menuClose = document.getElementById('menuClose');
-
-        menuToggle.onclick = () => menuDropdown.classList.add('show');
-        menuClose.onclick = () => menuDropdown.classList.remove('show');
-        menuDropdown.onclick = (e) => { if (e.target === menuDropdown) menuDropdown.classList.remove('show'); };
+        document.getElementById('menuToggle').onclick = () => document.getElementById('menuDropdown').classList.add('show');
+        document.getElementById('menuClose').onclick = () => document.getElementById('menuDropdown').classList.remove('show');
     </script>
 </body>
 </html>
