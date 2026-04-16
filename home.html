@@ -14,27 +14,33 @@
         </div>
     </div>
     <div class="container">
-        <h1 id="iepeasTitle" style="font-size: 56px; cursor:pointer;">🌸 IEPEAS 🌸</h1>
-        <p>Marga Komunitas Solid & Positif</p>
-        <div class="glass-box" style="text-align:center; border-radius:60px; display:inline-block; padding: 10px 20px;">
-            <span>✈️ IEP : International Education Plane</span> | <span>🌌 EAS : Education Astronomi and Ship</span>
+        <div class="hero">
+            <h1 id="iepeasTitle">🌸 IEPEAS 🌸</h1>
+            <p>Marga Komunitas Solid & Positif</p>
+            <div class="singkatan">
+                <span>✈️ IEP : International Education Plane</span>
+                <span>🌌 EAS : Education Astronomi and Ship</span>
+            </div>
         </div>
-        <div class="glass-box">
-            <h2 style="border-bottom: 3px solid #60a5fa; display:inline-block;">✨ Keunggulan</h2>
-            <ul style="list-style:none; margin-top:15px;">
-                <li>✈️ Pengetahuan pesawat terbang</li><li>🪐 Eksplorasi antariksa</li><li>🤝 Solidaritas tinggi</li>
+        <div class="feature-list">
+            <h2 style="border-bottom:3px solid #60a5fa; display:inline-block; margin-bottom:15px;">✨ Keunggulan</h2>
+            <ul style="list-style:none; line-height:2;">
+                <li>✈️ Pengetahuan pesawat terbang</li><li>🪐 Eksplorasi antariksa</li><li>🤝 Saling membantu</li>
             </ul>
         </div>
-        <a href="web.html" class="link-card" style="margin-top:30px; background:#3b82f6; font-weight:bold;">📝 Daftar Sekarang</a>
+        <div style="text-align:center; margin-top:40px;">
+            <a href="web.html" class="btn-daftar">📝 Daftar Sekarang</a>
+        </div>
+        <div class="peraturan-container">
+            <h3>📜 Peraturan Wajib</h3>
+            <p style="font-size:0.9rem; margin-top:10px;">1. No Toxic | 2. Toleransi | 3. Wajib Edukasi</p>
+        </div>
         <div class="credit">©IEPEAS</div>
     </div>
     <script src="rain.js"></script>
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const menuDropdown = document.getElementById('menuDropdown');
-        const menuClose = document.getElementById('menuClose');
-        menuToggle.addEventListener('click', () => menuDropdown.classList.add('show'));
-        menuClose.addEventListener('click', () => menuDropdown.classList.remove('show'));
+        document.getElementById('menuToggle').onclick = () => document.getElementById('menuDropdown').classList.add('show');
+        document.getElementById('menuClose').onclick = () => document.getElementById('menuDropdown').classList.remove('show');
     </script>
 </body>
 </html>
