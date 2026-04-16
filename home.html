@@ -32,7 +32,7 @@
         .rain {
             position: absolute;
             top: -20px;
-            background: rgba(180, 220, 255, 0.4);
+            background: rgba(180, 220, 255, 0.5);
             width: 1.5px;
             height: 30px;
             border-radius: 2px;
@@ -306,7 +306,7 @@
     </style>
 </head>
 <body>
-    <!-- Hujan -->
+    <!-- Tempat hujan -->
     <div class="rain-container" id="rainContainer"></div>
 
     <div class="menu-container">
@@ -380,29 +380,37 @@
     </div>
 
     <script>
-        // Membuat hujan
-        function createRain() {
+        // Membuat hujan bertahap: 150 butiran, muncul satu per satu setiap 30ms
+        function addRainDrop() {
             const container = document.getElementById('rainContainer');
-            const rainCount = 80;
-            for (let i = 0; i < rainCount; i++) {
-                const rain = document.createElement('div');
-                rain.classList.add('rain');
-                const height = 15 + Math.random() * 40;
-                const width = 1 + Math.random() * 2;
-                const duration = 0.8 + Math.random() * 1.5;
-                const delay = Math.random() * 10;
-                const leftPos = Math.random() * 100;
-                rain.style.height = height + 'px';
-                rain.style.width = width + 'px';
-                rain.style.animationDuration = duration + 's';
-                rain.style.animationDelay = delay + 's';
-                rain.style.left = leftPos + '%';
-                container.appendChild(rain);
-            }
+            const rain = document.createElement('div');
+            rain.classList.add('rain');
+            // variasi acak
+            const height = 15 + Math.random() * 40;
+            const width = 1 + Math.random() * 2;
+            const duration = 0.8 + Math.random() * 1.5;
+            const delay = Math.random() * 10; // delay tetap acak agar jatuhnya tidak serempak
+            const leftPos = Math.random() * 100;
+            rain.style.height = height + 'px';
+            rain.style.width = width + 'px';
+            rain.style.animationDuration = duration + 's';
+            rain.style.animationDelay = delay + 's';
+            rain.style.left = leftPos + '%';
+            container.appendChild(rain);
         }
-        createRain();
 
-        // Easter egg
+        let count = 0;
+        const totalRain = 150;
+        const interval = setInterval(() => {
+            if (count < totalRain) {
+                addRainDrop();
+                count++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 30); // setiap 30ms muncul 1 butir -> total 150 butir dalam 4.5 detik
+
+        // Easter egg (klik judul)
         const title = document.getElementById('iepeasTitle');
         function createFallingEmoji(emoji, xPos) {
             const el = document.createElement('div');
@@ -415,9 +423,9 @@
             setTimeout(() => el.remove(), duration * 1000);
         }
         title.addEventListener('click', () => {
-            const count = 18 + Math.floor(Math.random() * 12);
+            const countEmoji = 18 + Math.floor(Math.random() * 12);
             const emojis = ['✈️', '🌟', '⭐', '🚀', '🛸', '💫', '🌠'];
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < countEmoji; i++) {
                 const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
                 const randomX = Math.random() * window.innerWidth;
                 setTimeout(() => createFallingEmoji(randomEmoji, randomX), Math.random() * 400);
