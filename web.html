@@ -6,41 +6,41 @@
     <title>Form Pendaftaran - IEPEAS</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Tambahan khusus untuk form di web.html */
+        /* Tambahan khusus untuk form di web.html - card lebih kecil */
         .glass-card {
-            max-width: 950px;
+            max-width: 700px;  /* diperkecil dari 950px */
             width: 100%;
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 40px 45px;
+            padding: 30px 35px;  /* padding diperkecil */
             margin: 0 auto;
         }
-        .form-group { margin-bottom: 24px; width: 100%; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #f0f4fa; }
-        .form-group input, .form-group textarea { width: 100%; background: rgba(255,255,255,0.95); border: none; border-radius: 30px; padding: 14px 20px; font-size: 16px; color: #1e2f2f; }
-        .form-group textarea { min-height: 100px; resize: vertical; }
-        .vertical-option { margin-bottom: 24px; }
-        .option-label { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; color: #f0f4fa; }
-        .option-label input { width: auto; transform: scale(1.1); accent-color: #ffb347; }
-        .sub-input { margin-left: 28px; }
-        .sub-input input { width: calc(100% - 30px); padding: 10px 16px; border-radius: 28px; border: none; background: rgba(255,255,255,0.9); }
-        .radio-group-horizontal { display: flex; align-items: center; gap: 25px; margin-left: 20px; margin-top: 8px; }
-        .radio-group-horizontal span { display: flex; align-items: center; gap: 6px; }
-        h1 { font-size: 36px; text-align: center; color: #ffffff; margin-bottom: 8px; }
-        .sub { text-align: center; color: #cbd5e6; font-size: 0.95rem; margin-bottom: 32px; border-bottom: 1px solid rgba(255,255,240,0.2); padding-bottom: 14px; }
-        h2 { font-size: 1.7rem; margin: 28px 0 18px 0; border-left: 7px solid #ffb347; padding-left: 18px; color: #f0f4fa; }
-        button[type="submit"] { background: #d45a2b; border: none; padding: 16px; width: 100%; font-size: 18px; font-weight: bold; color: white; border-radius: 50px; cursor: pointer; margin-top: 20px; transition: 0.2s; }
+        .form-group { margin-bottom: 20px; width: 100%; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 6px; color: #f0f4fa; font-size: 0.9rem; }
+        .form-group input, .form-group textarea { width: 100%; background: rgba(255,255,255,0.95); border: none; border-radius: 30px; padding: 10px 16px; font-size: 14px; color: #1e2f2f; }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+        .vertical-option { margin-bottom: 20px; }
+        .option-label { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: #f0f4fa; font-size: 0.9rem; }
+        .option-label input { width: auto; transform: scale(1); accent-color: #ffb347; }
+        .sub-input { margin-left: 24px; }
+        .sub-input input { width: calc(100% - 30px); padding: 8px 14px; border-radius: 28px; border: none; background: rgba(255,255,255,0.9); font-size: 13px; }
+        .radio-group-horizontal { display: flex; align-items: center; gap: 20px; margin-left: 20px; margin-top: 6px; }
+        .radio-group-horizontal span { display: flex; align-items: center; gap: 5px; font-size: 0.9rem; }
+        h1 { font-size: 28px; text-align: center; color: #ffffff; margin-bottom: 6px; }
+        .sub { text-align: center; color: #cbd5e6; font-size: 0.8rem; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,240,0.2); padding-bottom: 10px; }
+        h2 { font-size: 1.3rem; margin: 20px 0 12px 0; border-left: 5px solid #ffb347; padding-left: 14px; color: #f0f4fa; }
+        button[type="submit"] { background: #d45a2b; border: none; padding: 12px; width: 100%; font-size: 16px; font-weight: bold; color: white; border-radius: 50px; cursor: pointer; margin-top: 15px; transition: 0.2s; }
         button[type="submit"]:hover { background: #b23c1a; }
-        .follow-info { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); border-left: 5px solid #ffb347; padding: 14px 20px; border-radius: 30px; margin: 30px 0 10px; text-align: center; color: #f0f4fa; }
-        hr { margin: 28px 0 20px; border-color: rgba(255,255,255,0.15); }
-        .footer-text { text-align: center; font-size: 13px; color: #cbd5e6; }
-        .credit { text-align: center; font-size: 8px; opacity: 0.6; margin-top: 20px; color: #cbd5e6; }
+        .follow-info { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); border-left: 4px solid #ffb347; padding: 10px 16px; border-radius: 30px; margin: 20px 0 8px; text-align: center; color: #f0f4fa; font-size: 0.8rem; }
+        hr { margin: 20px 0 15px; border-color: rgba(255,255,255,0.15); }
+        .footer-text { text-align: center; font-size: 11px; color: #cbd5e6; }
+        .credit { text-align: center; font-size: 8px; opacity: 0.6; margin-top: 15px; color: #cbd5e6; }
         @media (max-width: 650px) {
-            .glass-card { padding: 25px 20px; }
-            h1 { font-size: 28px; }
-            h2 { font-size: 1.4rem; }
+            .glass-card { padding: 20px; max-width: 95%; }
+            h1 { font-size: 24px; }
+            h2 { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -67,19 +67,19 @@
             <div class="form-group"><label>Asal kota :</label><input type="text" id="asal_kota" placeholder="Tokyo, Osaka, Kyoto, dll" required></div>
 
             <h2>2. Riwayat Komunitas</h2>
-            <div class="form-group"><label>Apakah kamu punya komunitas/marga lain?</label><textarea id="riwayat_komunitas" placeholder="Jika tidak ada, tulis: Tidak" rows="3" required></textarea></div>
+            <div class="form-group"><label>Apakah kamu punya komunitas/marga lain?</label><textarea id="riwayat_komunitas" placeholder="Jika tidak ada, tulis: Tidak" rows="2" required></textarea></div>
 
             <h2>3. Tujuan Bergabung</h2>
-            <div class="form-group"><label>Apa alasan dan tujuan kamu masuk Marga IEP EAS?</label><textarea id="tujuan" placeholder="Tuliskan alasan dengan jelas..." rows="4" required></textarea></div>
+            <div class="form-group"><label>Apa alasan dan tujuan kamu masuk Marga IEP EAS?</label><textarea id="tujuan" placeholder="Tuliskan alasan dengan jelas..." rows="3" required></textarea></div>
 
             <h2>4. Pengetahuan Dasar</h2>
-            <label style="color:#cbd5e6;">(Pilih minimal satu - wajib)</label>
-            <div class="vertical-option"><div class="option-label"><input type="checkbox" id="iep" value="IEP"><label for="iep">✈️ IEP → Sebutkan pesawat yang kamu ketahui</label></div><div class="sub-input"><input type="text" id="jawaban_pesawat" placeholder="Contoh: Boeing 787, F-16, C-130"></div></div>
-            <div class="vertical-option"><div class="option-label"><input type="checkbox" id="eas" value="EAS"><label for="eas">🪐 EAS → Sebutkan planet yang kamu ketahui</label></div><div class="sub-input"><input type="text" id="jawaban_planet" placeholder="Contoh: Mars, Jupiter, Saturnus"></div></div>
+            <label style="color:#cbd5e6; font-size:0.8rem;">(Pilih minimal satu - wajib)</label>
+            <div class="vertical-option"><div class="option-label"><input type="checkbox" id="iep" value="IEP"><label for="iep">✈️ IEP → Sebutkan pesawat</label></div><div class="sub-input"><input type="text" id="jawaban_pesawat" placeholder="Contoh: Boeing 787, F-16"></div></div>
+            <div class="vertical-option"><div class="option-label"><input type="checkbox" id="eas" value="EAS"><label for="eas">🪐 EAS → Sebutkan planet</label></div><div class="sub-input"><input type="text" id="jawaban_planet" placeholder="Contoh: Mars, Jupiter, Saturnus"></div></div>
 
             <h2>5. Komitmen</h2>
-            <div class="vertical-option"><label>Apakah kamu siap membantu jika ada masalah di marga? (wajib)</label><div class="radio-group-horizontal"><span><input type="radio" name="siap_membantu" value="Ya" id="siap_ya"><label for="siap_ya">Ya</label></span><span><input type="radio" name="siap_membantu" value="Tidak" id="siap_tidak"><label for="siap_tidak">Tidak</label></span></div></div>
-            <div class="vertical-option"><label>Apakah kamu berjanji tidak membuat kerusuhan dan tidak menjatuhkan pihak lain? (wajib)</label><div class="radio-group-horizontal"><span><input type="radio" name="berjanji" value="Ya, saya berjanji" id="janji_ya"><label for="janji_ya">Ya, saya berjanji</label></span><span><input type="radio" name="berjanji" value="Tidak" id="janji_tidak"><label for="janji_tidak">Tidak</label></span></div></div>
+            <div class="vertical-option"><label style="font-size:0.85rem;">Apakah kamu siap membantu jika ada masalah di marga? (wajib)</label><div class="radio-group-horizontal"><span><input type="radio" name="siap_membantu" value="Ya" id="siap_ya"><label for="siap_ya">Ya</label></span><span><input type="radio" name="siap_membantu" value="Tidak" id="siap_tidak"><label for="siap_tidak">Tidak</label></span></div></div>
+            <div class="vertical-option"><label style="font-size:0.85rem;">Apakah kamu berjanji tidak membuat kerusuhan dan tidak menjatuhkan pihak lain? (wajib)</label><div class="radio-group-horizontal"><span><input type="radio" name="berjanji" value="Ya, saya berjanji" id="janji_ya"><label for="janji_ya">Ya</label></span><span><input type="radio" name="berjanji" value="Tidak" id="janji_tidak"><label for="janji_tidak">Tidak</label></span></div></div>
 
             <div class="follow-info">📢 Sebelum kirim jawaban:<br>Follow akun marga: <strong>@marga.iepeas.ofc</strong></div>
             <button type="submit">📱 Kirim Jawaban ke WhatsApp 📱</button>
@@ -87,6 +87,9 @@
         <hr><div class="footer-text">🗻 和の心 - Terima kasih sudah mendaftar.<br>Semoga kamu menjadi bagian dari komunitas yang solid dan positif.</div>
         <div class="credit">©IEPEAS</div>
     </div>
+
+    <!-- Efek hujan -->
+    <script src="rain.js"></script>
 
     <script>
         // Form submission ke WhatsApp
