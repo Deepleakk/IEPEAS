@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar - IEPEAS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran - IEPEAS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,27 +11,69 @@
         <div class="menu-toggle" id="menuToggle">☰</div>
         <div class="menu-dropdown" id="menuDropdown">
             <div class="menu-close" id="menuClose">✕</div>
-            <a href="home.html">🏠 Home</a><a href="web.html">📝 Daftar</a><a href="linktree.html">🔗 Linktree</a>
+            <a href="home.html">🏠 Home</a>
+            <a href="web.html">📝 Daftar</a>
+            <a href="linktree.html">🔗 Linktree</a>
         </div>
     </div>
+
     <div class="glass-card">
         <h1>🌸 FORM SELEKSI 🌸</h1>
+        <div style="text-align: center; color: #cbd5e6; margin-bottom: 20px;">
+            Isilah form dengan jujur. Penilaian dimulai dari sini.
+        </div>
+
         <form id="registerForm">
+            <h2 style="border-left: 5px solid var(--accent-orange); padding-left: 10px; margin: 20px 0;">1. Identitas</h2>
             <input type="text" id="nama_asli" placeholder="Nama Asli" required>
             <input type="number" id="umur" placeholder="Umur" required>
-            <textarea id="tujuan" placeholder="Alasan masuk marga..." required></textarea>
-            <button type="submit">📱 Kirim ke WhatsApp</button>
+            <input type="text" id="asal_kota" placeholder="Asal Kota" required>
+
+            <h2 style="border-left: 5px solid var(--accent-orange); padding-left: 10px; margin: 20px 0;">2. Alasan & Tujuan</h2>
+            <textarea id="tujuan" placeholder="Apa alasan kamu ingin bergabung?" rows="4" required></textarea>
+
+            <h2 style="border-left: 5px solid var(--accent-orange); padding-left: 10px; margin: 20px 0;">3. Pengetahuan</h2>
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px;">
+                <p style="font-size: 0.9rem; margin-bottom: 10px;">Sebutkan pesawat/planet yang kamu tahu:</p>
+                <input type="text" id="pengetahuan" placeholder="Contoh: Boeing 737 / Jupiter" required>
+            </div>
+
+            <div style="background: #3b82f633; padding: 15px; border-radius: 20px; margin-top: 20px; text-align: center;">
+                📢 Jangan lupa follow IG/TikTok: <strong>@marga.iepeas.ofc</strong>
+            </div>
+
+            <button type="submit">📱 Kirim Jawaban ke WhatsApp 📱</button>
         </form>
+        
+        <div class="credit">©IEPEAS</div>
     </div>
+
     <script src="rain.js"></script>
+    
     <script>
+        // LOGIKA KIRIM WHATSAPP (Akar Penting)
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            let nama = document.getElementById('nama_asli').value;
-            let pesan = `Halo Admin, saya ${nama} ingin daftar IEPEAS.`;
-            window.open(`https://wa.me/6289515560507?text=${encodeURIComponent(pesan)}`, '_blank');
+            
+            const nama = document.getElementById('nama_asli').value;
+            const umur = document.getElementById('umur').value;
+            const kota = document.getElementById('asal_kota').value;
+            const tujuan = document.getElementById('tujuan').value;
+            const ilmu = document.getElementById('pengetahuan').value;
+
+            const nomorWA = "6289515560507"; // Nomor lo
+            const pesan = `*FORM SELEKSI MEMBER IEPEAS*\n\n` +
+                          `*Nama:* ${nama}\n` +
+                          `*Umur:* ${umur}\n` +
+                          `*Kota:* ${kota}\n` +
+                          `*Tujuan:* ${tujuan}\n` +
+                          `*Pengetahuan:* ${ilmu}\n\n` +
+                          `(Dikirim dari Form Web)`;
+
+            window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
         });
-        // Script menu sama kayak home
+
+        // Menu Toggle
         document.getElementById('menuToggle').onclick = () => document.getElementById('menuDropdown').classList.add('show');
         document.getElementById('menuClose').onclick = () => document.getElementById('menuDropdown').classList.remove('show');
     </script>
