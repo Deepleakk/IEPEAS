@@ -76,12 +76,13 @@
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
             background: rgba(0,0,0,0.3);
             padding: 10px 16px;
             border-radius: 40px;
             transition: 0.2s;
             flex-wrap: wrap;
+            gap: 10px;
         }
         .contact-item:hover {
             background: #3b82f6;
@@ -89,9 +90,6 @@
         }
         .contact-item .wa-icon {
             font-size: 20px;
-        }
-        .contact-item .phone {
-            flex: 1;
         }
         .contact-item a {
             color: #cbd5e6;
@@ -101,18 +99,9 @@
         .contact-item .name {
             color: #a78bfa;
             font-weight: bold;
-            margin-left: 10px;
-        }
-        .contact-item .role {
-            font-size: 0.7rem;
-            background: rgba(255,180,71,0.3);
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin-left: 8px;
         }
         .contact-item:hover a,
-        .contact-item:hover .name,
-        .contact-item:hover .role {
+        .contact-item:hover .name {
             color: white;
         }
         .contributor-grid {
@@ -186,8 +175,7 @@
             .credit-card h2 { font-size: 1.4rem; }
             .contributor-card { width: 160px; }
             .profile-header { justify-content: center; text-align: center; }
-            .contact-item { flex-direction: column; align-items: flex-start; }
-            .contact-item .name { margin-left: 0; }
+            .contact-item { flex-direction: column; align-items: stretch; text-align: center; }
         }
     </style>
 </head>
@@ -217,9 +205,8 @@
                 <div class="contact-list">
                     <div class="contact-item">
                         <span class="wa-icon">📱</span>
-                        <a href="https://wa.me/6289515560507" class="phone" target="_blank">+62 895-1556-0507</a>
+                        <a href="https://wa.me/6289515560507" target="_blank">+62 895-1556-0507</a>
                         <span class="name">rama</span>
-                        <span class="role">Owner</span>
                     </div>
                 </div>
             </div>
@@ -233,45 +220,39 @@
                 <div class="contact-list">
                     <div class="contact-item">
                         <span class="wa-icon">📱</span>
-                        <a href="https://wa.me/6285715372790" class="phone" target="_blank">+62 857-1537-2790</a>
+                        <a href="https://wa.me/6285715372790" target="_blank">+62 857-1537-2790</a>
                         <span class="name">nazneen</span>
                     </div>
                     <div class="contact-item">
                         <span class="wa-icon">📱</span>
-                        <a href="https://wa.me/62895398972020" class="phone" target="_blank">+62 895-3989-72020</a>
+                        <a href="https://wa.me/62895398972020" target="_blank">+62 895-3989-72020</a>
                         <span class="name">revv</span>
                     </div>
                     <div class="contact-item">
                         <span class="wa-icon">📱</span>
-                        <a href="https://wa.me/6282379849016" class="phone" target="_blank">+62 823-7984-9016</a>
+                        <a href="https://wa.me/6282379849016" target="_blank">+62 823-7984-9016</a>
                         <span class="name">riski</span>
                     </div>
                     <div class="contact-item">
                         <span class="wa-icon">📱</span>
-                        <a href="https://wa.me/6287843071054" class="phone" target="_blank">+62 878-4307-1054</a>
+                        <a href="https://wa.me/6287843071054" target="_blank">+62 878-4307-1054</a>
                         <span class="name">kusuma</span>
                     </div>
                     <div class="contact-item">
                         <span class="wa-icon">📱</span>
-                        <a href="https://wa.me/6281460127110" class="phone" target="_blank">+62 814-6012-7110</a>
+                        <a href="https://wa.me/6281460127110" target="_blank">+62 814-6012-7110</a>
                         <span class="name">dian</span>
                     </div>
                     <div class="contact-item">
                         <span class="wa-icon">📱</span>
-                        <a href="https://wa.me/6288906142026" class="phone" target="_blank">+62 889-0614-2026</a>
+                        <a href="https://wa.me/6288906142026" target="_blank">+62 889-0614-2026</a>
                         <span class="name">faiz</span>
-                        <span class="role">Webdev</span>
                     </div>
                 </div>
             </div>
 
             <h2>👥 Tim Pengembang</h2>
             <div class="contributor-grid">
-                <div class="contributor-card">
-                    <div class="icon">👑</div>
-                    <div class="name">rama</div>
-                    <div class="role">Founder & Owner</div>
-                </div>
                 <div class="contributor-card">
                     <div class="icon">🤖</div>
                     <div class="name">DeepSeek AI</div>
@@ -281,11 +262,6 @@
                     <div class="icon">🎨</div>
                     <div class="name">Marga IEPEAS</div>
                     <div class="role">Ide & Konsep</div>
-                </div>
-                <div class="contributor-card">
-                    <div class="icon">💻</div>
-                    <div class="name">faiz</div>
-                    <div class="role">Webdev</div>
                 </div>
             </div>
 
@@ -323,4 +299,4 @@
         menuDropdown.addEventListener('click', (e) => { if (e.target === menuDropdown) menuDropdown.classList.remove('show'); });
     </script>
 </body>
-                      </html>
+</html>
