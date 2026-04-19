@@ -1,4 +1,4 @@
-// nebula.js - Background nebula + bintang cepat (1-2.5) + matahari flash
+// nebula.js - Background nebula + bintang super cepat (5-7.5) + black hole
 (function() {
     const canvas = document.createElement('canvas');
     canvas.id = 'nebulaCanvas';
@@ -35,8 +35,8 @@
                 y: Math.random() * height,
                 radius: Math.random() * 2.5 + 0.5,
                 alpha: Math.random() * 0.6 + 0.2,
-                speedY: Math.random() * 1.5 + 1,    // 1 - 2.5 pixel per frame
-                speedX: (Math.random() - 0.5) * 0.5,
+                speedY: Math.random() * 2.5 + 5,    // 5 - 7.5 pixel per frame
+                speedX: (Math.random() - 0.5) * 1.5,
                 blink: Math.random() > 0.7,
                 blinkSpeed: Math.random() * 0.03 + 0.01
             });
@@ -92,45 +92,66 @@
         }
     }
 
-    function drawSunFlash() {
-        const sunX = width - 80;
-        const sunY = 80;
-        const baseRadius = 35;
+    function drawBlackHole() {
+        const x = width - 80;
+        const y = 80;
+        const baseRadius = 30;
         
-        const flashIntensity = (Math.sin(time * 3) + 1) / 2;
-        const radius = baseRadius + flashIntensity * 8;
-        const glowRadius = 60 + flashIntensity * 20;
+        // Efek denyut black hole
+        const pulse = Math.sin(time * 3) * 0.1 + 0.9;
+        const radius = baseRadius * pulse;
         
-        const glow = ctx.createRadialGradient(sunX, sunY, 5, sunX, sunY, glowRadius);
-        glow.addColorStop(0, `rgba(255, 200, 100, ${0.3 + flashIntensity * 0.3})`);
-        glow.addColorStop(1, 'rgba(255, 100, 50, 0)');
+        // Lingkaran akresi (cincin berputar)
+        for (let i = 0; i < 3; i++) {
+            const ringRadius = radius + 12 + i * 8;
+            ctx.beginPath();
+            ctx.arc(x, y, ringRadius, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(255, 100, 50, ${0.2 - i * 0.05})`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+        
+        // Cincin akresi yang berputar (partial arc)
+        for (let r = 0; r < 2; r++) {
+            const ringRadius = radius + 10 + r * 10;
+            const startAngle = time * 2 + r;
+            const endAngle = startAngle + Math.PI * 1.5;
+            ctx.beginPath();
+            ctx.arc(x, y, ringRadius, startAngle, endAngle);
+            ctx.strokeStyle = `rgba(255, 150, 80, ${0.5 - r * 0.2})`;
+            ctx.lineWidth = 3 - r;
+            ctx.stroke();
+        }
+        
+        // Black hole core (hitam pekat dengan gradien)
+        const blackHoleGrad = ctx.createRadialGradient(x - 5, y - 5, 5, x, y, radius);
+        blackHoleGrad.addColorStop(0, '#000000');
+        blackHoleGrad.addColorStop(0.7, '#111111');
+        blackHoleGrad.addColorStop(1, '#2a0a2a');
         ctx.beginPath();
-        ctx.arc(sunX, sunY, glowRadius, 0, Math.PI * 2);
-        ctx.fillStyle = glow;
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = blackHoleGrad;
         ctx.fill();
         
-        const sunGrad = ctx.createRadialGradient(sunX - 5, sunY - 5, 5, sunX, sunY, radius);
-        const intensity = 0.5 + flashIntensity * 0.5;
-        sunGrad.addColorStop(0, `rgba(255, 220, 100, ${intensity})`);
-        sunGrad.addColorStop(0.6, `rgba(255, 150, 50, ${intensity})`);
-        sunGrad.addColorStop(1, `rgba(255, 80, 0, ${intensity})`);
+        // Efek gravitasi (lingkaran cahaya tipis di tepi)
         ctx.beginPath();
-        ctx.arc(sunX, sunY, radius, 0, Math.PI * 2);
-        ctx.fillStyle = sunGrad;
-        ctx.fill();
+        ctx.arc(x, y, radius + 2, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 80, 80, ${0.3 + Math.sin(time * 5) * 0.1})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
         
-        const rayCount = 12;
-        for (let i = 0; i < rayCount; i++) {
-            const angle = (i / rayCount) * Math.PI * 2 + time * 0.5;
-            const x1 = sunX + Math.cos(angle) * radius;
-            const y1 = sunY + Math.sin(angle) * radius;
-            const x2 = sunX + Math.cos(angle) * (radius + 18);
-            const y2 = sunY + Math.sin(angle) * (radius + 18);
+        // Efek sinar hisap (garis-garis ke arah pusat)
+        for (let i = 0; i < 8; i++) {
+            const angle = i * Math.PI * 2 / 8 + time;
+            const x1 = x + Math.cos(angle) * (radius + 8);
+            const y1 = y + Math.sin(angle) * (radius + 8);
+            const x2 = x + Math.cos(angle) * (radius + 25);
+            const y2 = y + Math.sin(angle) * (radius + 25);
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
-            ctx.lineWidth = 2 + flashIntensity * 2;
-            ctx.strokeStyle = `rgba(255, 200, 100, ${0.4 + flashIntensity * 0.4})`;
+            ctx.strokeStyle = `rgba(255, 150, 80, ${0.2 + Math.sin(time * 5 + i) * 0.1})`;
+            ctx.lineWidth = 1.5;
             ctx.stroke();
         }
     }
@@ -139,7 +160,7 @@
         if (!ctx) return;
         drawNebula();
         drawStars();
-        drawSunFlash();
+        drawBlackHole();
         time += 0.02;
         requestAnimationFrame(animate);
     }
